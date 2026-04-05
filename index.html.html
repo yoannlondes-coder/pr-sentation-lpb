@@ -1,0 +1,755 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
+<title>La Planète Bois — Présentation commerciale</title>
+<style>
+:root{
+  --bg:#0c0a09;--bg2:#16120f;--panel:#141110;
+  --card:#f7f1e8;--card2:#ece1d1;
+  --text:#201913;--muted:#6a6157;
+  --accent:#B87333;--accent2:#d4955a;--accent-dark:#8a5525;
+  --line:#e2d8ca;--white:#fffdf9;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--bg);font-family:'Lato',system-ui,sans-serif}
+body{color:#fff;background:radial-gradient(circle at top left,#1b1612 0%,var(--bg) 45%,#0c0c0c 100%)}
+.app{max-width:1520px;margin:0 auto;padding:16px 24px 20px}
+
+/* TOP BAR */
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:12px}
+.topbar-left{display:flex;align-items:center;gap:16px}
+.topbar-logo{height:48px;width:auto;filter:brightness(1.1)}
+.topbar-text .kicker{font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--accent);font-weight:700}
+.topbar-text h1{margin:2px 0 0;font-size:32px;letter-spacing:-.03em;font-family:'Cormorant Garamond',serif;font-weight:700}
+.topdesc{color:#9a8e82;font-size:13px;text-align:right}
+
+/* LAYOUT */
+.layout{display:grid;grid-template-columns:260px 1fr;gap:14px}
+
+/* SIDEBAR */
+.sidebar{background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.02));border:1px solid rgba(255,255,255,.08);border-radius:22px;padding:14px;position:sticky;top:14px;height:fit-content;backdrop-filter:blur(8px);max-height:calc(100vh - 36px);overflow-y:auto}
+.sidehead{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;font-weight:700}
+.navbtn{width:100%;text-align:left;padding:10px 12px;border-radius:12px;border:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.025);color:#f5f5f4;cursor:pointer;margin-bottom:4px;font-size:12.5px;font-family:'Lato',sans-serif;transition:.2s;display:flex;align-items:center;gap:8px}
+.navbtn:hover{background:rgba(255,255,255,.07)}
+.navbtn.active{background:linear-gradient(180deg,var(--accent2),var(--accent));border-color:#e7c084;color:#20170f;font-weight:700;box-shadow:0 6px 16px rgba(184,115,51,.22)}
+.navnum{font-size:9px;font-weight:700;opacity:.5;min-width:16px}
+.navbtn.active .navnum{opacity:.8}
+.help{margin-top:10px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:14px;padding:12px;color:#ddd6cc;font-size:12px;line-height:1.5}
+
+/* VIEWER */
+.viewer{min-height:78vh;background:linear-gradient(135deg,var(--card),var(--card2));border-radius:24px;overflow:hidden;border:1px solid #2a2622;box-shadow:0 16px 60px rgba(0,0,0,.3);position:relative}
+.slide{width:100%;min-height:78vh;display:grid}
+.pad{padding:40px 44px}
+
+/* TYPOGRAPHY IN VIEWER */
+.eyebrow{display:inline-block;background:#f6e7cd;color:var(--accent-dark);padding:6px 11px;border-radius:999px;font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.title{margin:14px 0 0;font-size:44px;line-height:1.05;color:var(--text);letter-spacing:-.03em;font-family:'Cormorant Garamond',serif;font-weight:700}
+.subtitle{margin-top:10px;font-size:17px;line-height:1.4;color:var(--muted)}
+.body{margin-top:12px;font-size:16px;line-height:1.5;color:#3b342d}
+
+/* HERO */
+.hero{grid-template-columns:1fr;position:relative}
+.hero .bg{position:absolute;inset:0}
+.hero .bg img{width:100%;height:100%;object-fit:cover;display:block;filter:brightness(.4) saturate(.85)}
+.hero .overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(12,10,9,.3) 0%,rgba(12,10,9,.15) 40%,rgba(12,10,9,.5) 100%)}
+.hero .content{position:relative;z-index:2;color:white;padding:60px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;min-height:78vh}
+.hero .content .title{color:white;font-size:56px;letter-spacing:.02em}
+.hero .content .subtitle{color:rgba(255,255,255,.7);font-size:20px;letter-spacing:.12em;text-transform:uppercase;font-weight:300}
+.hero .content .body{color:rgba(255,255,255,.55);font-size:15px;max-width:600px}
+.hero .hero-logo{height:90px;width:auto;margin-bottom:28px;filter:drop-shadow(0 4px 16px rgba(0,0,0,.4))}
+.hero .hero-line{width:60px;height:2px;background:linear-gradient(90deg,var(--accent),var(--accent2));margin:20px auto;border-radius:2px}
+.hero .hero-badges{display:flex;gap:24px;margin-top:32px;flex-wrap:wrap;justify-content:center}
+.hero .hero-badge{display:flex;flex-direction:column;align-items:center;gap:6px;min-width:100px}
+.hero .hero-badge .hb-icon{width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center}
+.hero .hero-badge .hb-icon svg{width:20px;height:20px;stroke:var(--accent);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.hero .hero-badge .hb-label{font-size:11px;color:rgba(255,255,255,.6);font-weight:600;letter-spacing:.04em;text-align:center}
+.hero .hero-mention{margin-top:36px;font-size:12px;color:rgba(255,255,255,.35);letter-spacing:.06em}
+
+/* THREEPOINTS */
+.threepoints{grid-template-columns:1.05fr .95fr}
+.threepoints .left{display:flex;flex-direction:column;justify-content:center}
+.threepoints .imagewrap{position:relative;height:100%;cursor:pointer}
+.threepoints .imagewrap img{width:100%;height:100%;object-fit:cover}
+.threegrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:18px}
+
+/* POINTCARD — cliquable */
+.pointcard{background:rgba(255,255,255,.82);border:1px solid var(--line);border-radius:18px;padding:16px;box-shadow:0 4px 16px rgba(34,25,19,.04);cursor:pointer;transition:all .3s;overflow:hidden}
+.pointcard:hover{transform:translateY(-2px);box-shadow:0 10px 26px rgba(34,25,19,.08)}
+.pointcard h3{margin:0 0 5px;font-size:15.5px;color:var(--text);font-family:'Cormorant Garamond',serif}
+.pointcard p{margin:0;color:var(--muted);font-size:13px;line-height:1.45}
+.pointcard .detail{max-height:0;overflow:hidden;transition:max-height .4s;font-size:12px;color:#5a5047;line-height:1.55}
+.pointcard.open .detail{max-height:300px;margin-top:8px}
+.pointcard .expand-hint{font-size:10px;color:var(--accent);margin-top:6px;font-weight:700}
+.pointcard.open .expand-hint{display:none}
+
+/* GALLERIES */
+.gallery4 .head,.gallery3 .head,.gallery2 .head,.gallery6 .head,.materials .head,.process-grid .head,.contact .head,.info-slide .head{padding:28px 36px 14px}
+.gallerygrid4{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:10px;padding:0 36px 32px}
+.gallerygrid3{display:grid;grid-template-columns:1.1fr 1fr 1fr;gap:10px;padding:0 36px 32px}
+.gallerygrid2{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 36px 32px}
+.gallerygrid6{display:grid;grid-template-columns:1fr 1fr 1fr;grid-template-rows:1fr 1fr;gap:10px;padding:0 36px 32px}
+.gallerygrid5{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;padding:0 36px 32px}
+.galleryitem{position:relative;border-radius:18px;overflow:hidden;min-height:220px;background:#ddd;border:1px solid rgba(0,0,0,.04);box-shadow:0 6px 18px rgba(34,25,19,.05);cursor:zoom-in;transition:transform .3s}
+.galleryitem:hover{transform:scale(1.012)}
+.galleryitem img{width:100%;height:100%;object-fit:cover;display:block}
+.grad{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.18),rgba(0,0,0,0));pointer-events:none}
+.img-caption{position:absolute;bottom:10px;left:12px;color:#fff;font-size:11px;font-weight:700;opacity:0;transition:opacity .3s;pointer-events:none;text-shadow:0 1px 4px rgba(0,0,0,.5)}
+.galleryitem:hover .img-caption{opacity:1}
+
+/* CHIPS */
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.chip{padding:6px 10px;border-radius:999px;background:white;border:1px solid var(--line);font-size:11px;color:#4c443b}
+
+/* MATERIALS INSIDE TERRASSE */
+.matgrid-inline{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:16px;padding:0 36px 8px}
+.matcard-sm{background:rgba(255,255,255,.82);border:1px solid var(--line);border-radius:14px;overflow:hidden;cursor:pointer;transition:all .3s}
+.matcard-sm:hover{transform:translateY(-3px);box-shadow:0 10px 24px rgba(34,25,19,.08)}
+.matcard-sm img{width:100%;height:110px;object-fit:cover;display:block}
+.matcard-sm .matmeta{padding:8px 10px}
+.matcard-sm h3{margin:0;color:var(--text);font-size:13px;font-family:'Cormorant Garamond',serif}
+
+/* CONFIG TERRASSE */
+.config-section{padding:0 36px 20px}
+.config-title{font-size:20px;font-family:'Cormorant Garamond',serif;font-weight:700;color:var(--text);margin-bottom:14px;display:flex;align-items:center;gap:10px}
+.config-title::before{content:'';width:24px;height:2px;background:var(--accent);border-radius:2px}
+.config-steps{display:flex;flex-direction:column;gap:10px}
+.config-step{background:rgba(255,255,255,.6);border:1px solid var(--line);border-radius:16px;cursor:pointer;transition:all .3s;overflow:hidden;display:grid;grid-template-columns:1fr;align-items:stretch}
+.config-step:hover{background:rgba(255,255,255,.85)}
+.config-step.has-images{grid-template-columns:1fr auto}
+.config-step-left{padding:16px 18px;display:flex;flex-direction:column;justify-content:center}
+.config-step-header{display:flex;align-items:center;gap:12px}
+.config-step-num{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.config-step-info{flex:1}
+.config-step-info h3{margin:0;font-size:15px;color:var(--text);font-family:'Cormorant Garamond',serif;font-weight:700}
+.config-step-info p{margin:2px 0 0;font-size:12px;color:var(--muted);line-height:1.4}
+.config-step-arrow{font-size:14px;color:var(--accent);transition:transform .3s;font-weight:700}
+.config-step.open .config-step-arrow{transform:rotate(90deg)}
+.config-expand{grid-template-columns:1fr!important}
+.config-options{max-height:0;overflow:hidden;transition:max-height .5s;display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px;margin-top:0}
+.config-step.open .config-options{max-height:600px;margin-top:14px}
+.config-opt{background:rgba(255,255,255,.85);border:1px solid var(--line);border-radius:12px;overflow:hidden;text-align:center;transition:all .3s}
+.config-opt:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(34,25,19,.06)}
+.config-opt img{width:100%;height:90px;object-fit:cover;display:block;cursor:zoom-in}
+.config-opt .opt-name{font-size:12.5px;font-weight:700;color:var(--text);padding:6px 8px 2px;font-family:'Cormorant Garamond',serif}
+.config-opt .opt-tag{font-size:10px;color:var(--accent);font-weight:700;text-transform:uppercase;letter-spacing:.04em;padding:0 8px 6px}
+.config-opt .opt-detail{font-size:10.5px;color:var(--muted);line-height:1.4;padding:0 8px 8px;display:none}
+.config-step.open .config-opt .opt-detail{display:block}
+.config-single{max-height:0;overflow:hidden;transition:max-height .5s;display:grid;grid-template-columns:1fr 200px;gap:16px;align-items:center;margin-top:0}
+.config-step.open .config-single{max-height:400px;margin-top:14px}
+.config-single-text p{margin:0;font-size:13px;color:#5a5047;line-height:1.5}
+.config-single-img img{width:100%;height:140px;object-fit:cover;border-radius:12px;border:1px solid var(--line);cursor:zoom-in;transition:transform .3s}
+.config-single-img img:hover{transform:scale(1.03)}
+.config-thumbs{display:flex;gap:4px;border-left:1px solid var(--line);overflow:hidden;border-radius:0 16px 16px 0}
+.config-thumbs img{width:110px;height:100%;min-height:90px;object-fit:cover;display:block;cursor:zoom-in;transition:transform .3s;filter:brightness(.95)}
+.config-thumbs img:hover{filter:brightness(1.05);transform:scale(1.03)}
+.config-step.has-many-images .config-thumbs img{width:90px}
+.config-opt-label{position:absolute;bottom:6px;left:0;right:0;text-align:center;font-size:10px;font-weight:700;color:#fff;text-shadow:0 1px 4px rgba(0,0,0,.6)}
+.config-thumb-wrap{position:relative;display:flex;flex-direction:column}
+.config-thumb-caption{background:rgba(0,0,0,.04);text-align:center;padding:4px 6px;font-size:10px;color:var(--muted);font-weight:600;border-top:1px solid var(--line)}
+.tag{display:inline-block;margin-top:4px;padding:3px 7px;border-radius:999px;background:#f7e7c7;color:var(--accent-dark);font-size:10px;font-weight:700}
+.matcard-sm .mat-detail{max-height:0;overflow:hidden;transition:max-height .4s;font-size:11px;color:var(--muted);line-height:1.45}
+.matcard-sm.open .mat-detail{max-height:200px;margin-top:6px}
+
+/* PROCESS GRID (style capture) */
+.process-grid{grid-template-rows:auto 1fr}
+.proc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;padding:0 36px 32px}
+.proc-card{background:rgba(255,255,255,.82);border:1px solid var(--line);border-radius:20px;padding:24px 20px;text-align:center;cursor:pointer;transition:all .3s;overflow:hidden}
+.proc-card:hover{transform:translateY(-3px);box-shadow:0 12px 28px rgba(34,25,19,.08);background:rgba(255,255,255,.95)}
+.proc-card.open{background:rgba(255,255,255,.95);box-shadow:0 12px 28px rgba(34,25,19,.08)}
+.proc-icon{width:56px;height:56px;border-radius:50%;background:#f3ebe0;display:flex;align-items:center;justify-content:center;margin:0 auto 12px}
+.proc-icon svg{width:24px;height:24px;stroke:var(--accent);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.proc-num{font-size:12px;color:var(--accent);font-weight:700;margin-bottom:6px}
+.proc-card h3{font-size:16px;color:var(--text);font-family:'Cormorant Garamond',serif;margin:0 0 6px}
+.proc-card p{font-size:12.5px;color:var(--muted);line-height:1.45;margin:0}
+.proc-card .proc-detail{max-height:0;overflow:hidden;transition:max-height .4s;font-size:12px;color:#5a5047;line-height:1.5;text-align:left;margin-top:0;border-top:0 solid var(--line)}
+.proc-card.open .proc-detail{max-height:300px;margin-top:12px;padding-top:12px;border-top-width:1px}
+
+/* WHYUS */
+.whyus-full{grid-template-rows:auto 1fr}
+.whyus-full .head{padding:28px 36px 8px}
+.whygrid{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:0 36px 24px}
+.whycard{background:rgba(255,255,255,.88);border:1px solid var(--line);border-radius:16px;padding:18px 20px;cursor:pointer;transition:all .3s;overflow:hidden;display:flex;gap:16px;align-items:flex-start}
+.whycard:hover{background:rgba(255,255,255,.98);transform:translateY(-2px);box-shadow:0 8px 24px rgba(34,25,19,.08)}
+.whycard .why-icon{min-width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.whycard .why-icon svg{width:22px;height:22px;stroke:#fff;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.whycard .why-body h3{margin:0 0 4px;font-size:15.5px;color:var(--text);font-family:'Cormorant Garamond',serif;font-weight:700}
+.whycard .why-body p{margin:0;color:var(--muted);font-size:12.5px;line-height:1.45}
+.whycard .why-detail{max-height:0;overflow:hidden;transition:max-height .4s;font-size:12px;color:#5a5047;line-height:1.5;margin-top:0;border-top:0 solid var(--line)}
+.whycard.open .why-detail{max-height:200px;margin-top:8px;padding-top:8px;border-top-width:1px}
+.whycard .why-hint{font-size:10px;color:var(--accent);margin-top:6px;font-weight:700}
+.whycard.open .why-hint{display:none}
+
+/* INSTALL PROCESS */
+.install-process{padding:0 36px 24px}
+.install-title{font-size:14px;font-family:'Cormorant Garamond',serif;font-weight:700;color:var(--text);margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.install-title::before{content:'';width:20px;height:2px;background:var(--accent);border-radius:2px}
+.install-steps{display:flex;gap:8px}
+.install-step{flex:1;background:rgba(255,255,255,.7);border:1px solid var(--line);border-radius:12px;padding:12px 10px;text-align:center;transition:all .3s;cursor:pointer;position:relative}
+.install-step:hover{background:rgba(255,255,255,.95);transform:translateY(-2px);box-shadow:0 6px 16px rgba(34,25,19,.06)}
+.install-step .step-num{width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;font-size:12px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;margin-bottom:6px}
+.install-step .step-label{font-size:11.5px;font-weight:700;color:var(--text);line-height:1.3}
+.install-step .step-text{font-size:10.5px;color:var(--muted);line-height:1.4;margin-top:4px}
+.install-step::after{content:'';position:absolute;top:50%;right:-6px;width:8px;height:8px;border-top:1.5px solid var(--accent);border-right:1.5px solid var(--accent);transform:translateY(-50%) rotate(45deg);opacity:.4}
+.install-step:last-child::after{display:none}
+.install-step .step-imgs{display:flex;gap:6px;margin-top:8px;justify-content:center}
+.install-step .step-imgs img{width:48px;height:48px;object-fit:cover;border-radius:8px;border:1px solid var(--line);cursor:zoom-in;transition:transform .2s}
+.install-step .step-imgs img:hover{transform:scale(1.1)}
+.install-step .step-imgs .step-img-label{font-size:9px;color:var(--muted);text-align:center;margin-top:2px}
+.install-step .step-img-wrap{display:flex;flex-direction:column;align-items:center}
+
+/* GUARANTEE GRID */
+.guarantee-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 36px 32px}
+.guarantee-card{background:rgba(255,255,255,.82);border:1px solid var(--line);border-radius:16px;padding:14px 16px;cursor:pointer;transition:all .3s}
+.guarantee-card:hover{background:rgba(255,255,255,.95);transform:translateY(-2px)}
+.guarantee-card h3{margin:0 0 3px;font-size:14px;color:var(--text);font-family:'Cormorant Garamond',serif;display:flex;align-items:center;gap:7px}
+.guarantee-card h3 .check{color:var(--accent);font-size:15px}
+.guarantee-card p{margin:0;font-size:12px;color:var(--muted);line-height:1.45}
+.guarantee-card .detail{max-height:0;overflow:hidden;transition:max-height .4s;font-size:11.5px;color:#5a5047;line-height:1.5}
+.guarantee-card.open .detail{max-height:200px;margin-top:6px}
+
+/* CONTACT */
+.contact{grid-template-columns:1.05fr .95fr}
+.contactbox{display:grid;gap:8px;margin-top:16px}
+.contactline{background:rgba(255,255,255,.82);border:1px solid var(--line);border-radius:14px;padding:12px 14px;font-size:15px;color:var(--text);box-shadow:0 4px 12px rgba(34,25,19,.03);cursor:pointer;transition:all .3s;display:flex;align-items:center;gap:10px}
+.contactline:hover{background:rgba(255,255,255,.95);transform:translateX(4px)}
+.contactline .ci{font-size:16px;min-width:24px;text-align:center}
+.contactright{position:relative;height:100%;display:grid;place-items:center;background:linear-gradient(135deg,#f7f0e5,#ede3d4);padding:20px}
+.contactright img{max-height:100px;width:auto;filter:brightness(1.05);opacity:.7}
+
+/* INFOBOX */
+.infobox{margin-top:14px;background:rgba(255,255,255,.65);border:1px solid var(--line);border-radius:16px;padding:12px 14px;color:var(--text);box-shadow:0 4px 12px rgba(34,25,19,.02)}
+.infobox h4{margin:0 0 6px;font-size:13.5px;font-family:'Cormorant Garamond',serif;color:var(--accent-dark)}
+.infobox ul{margin:0;padding-left:14px;color:var(--muted);line-height:1.55;font-size:12px}
+
+/* ACTIONS */
+.actions{display:flex;justify-content:space-between;align-items:center;margin-top:10px;color:#d6d0c7}
+.actionbtns{display:flex;gap:8px}
+.btn{border:0;border-radius:12px;padding:11px 15px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Lato',sans-serif;transition:all .2s}
+.prev{background:#211b16;color:#fff}
+.prev:hover{background:#2e261f}
+.next{background:linear-gradient(180deg,var(--accent2),var(--accent));color:#20170f;box-shadow:0 6px 16px rgba(184,115,51,.2)}
+.next:hover{box-shadow:0 10px 24px rgba(184,115,51,.3)}
+.counter{font-size:12px}
+
+/* LIGHTBOX */
+.lightbox{position:fixed;inset:0;background:rgba(8,8,8,.9);display:none;align-items:center;justify-content:center;z-index:9999;padding:20px;backdrop-filter:blur(6px)}
+.lightbox.open{display:flex}
+.lightbox img{max-width:92vw;max-height:88vh;object-fit:contain;border-radius:14px;box-shadow:0 16px 40px rgba(0,0,0,.4);background:#f7f1e8}
+.lightbox-close{position:absolute;top:14px;right:14px;width:44px;height:44px;border-radius:999px;border:0;background:white;color:#1d1712;font-weight:800;font-size:17px;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.2)}
+.lb-nav{position:absolute;top:50%;transform:translateY(-50%);width:46px;height:46px;border-radius:999px;border:0;background:rgba(255,255,255,.1);color:#fff;font-size:1.4rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .3s}
+.lb-nav:hover{background:rgba(255,255,255,.22)}
+.lb-prev{left:16px}
+.lb-next{right:16px}
+.lb-counter{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);color:rgba(255,255,255,.5);font-size:12px}
+
+/* RESPONSIVE */
+@media(max-width:1100px){
+  .layout{grid-template-columns:1fr}
+  .sidebar{position:relative;top:auto;display:flex;flex-wrap:wrap;gap:3px;padding:10px}
+  .sidehead{width:100%}
+  .navbtn{width:auto;flex:0 0 auto;font-size:11.5px;padding:8px 10px}
+  .help{display:none}
+  .title{font-size:34px}
+  .hero .content .title{font-size:42px}
+  .threepoints{grid-template-columns:1fr}
+  .contact{grid-template-columns:1fr}
+  .gallerygrid3,.gallerygrid6,.gallerygrid5{grid-template-columns:1fr 1fr}
+  .whygrid{grid-template-columns:1fr 1fr}
+  .proc-grid{grid-template-columns:1fr 1fr}
+  .matgrid-inline{grid-template-columns:repeat(3,1fr)}
+  .config-thumbs img{width:85px}
+}
+@media(max-width:760px){
+  .viewer{min-height:auto}.slide{min-height:auto}.galleryitem{min-height:180px}
+  .app{padding:8px}
+  .pad,.gallery4 .head,.gallery3 .head,.gallery2 .head,.gallery6 .head,.process-grid .head,.contact .head,.info-slide .head{padding:18px}
+  .gallerygrid4,.gallerygrid3,.gallerygrid2,.gallerygrid6,.gallerygrid5,.matgrid-inline,.proc-grid,.whygrid,.guarantee-grid,.config-section{padding-left:18px;padding-right:18px}
+  .title{font-size:28px}.hero .content{padding:20px}.hero .content .title{font-size:34px}
+  .threegrid,.whygrid,.guarantee-grid{grid-template-columns:1fr}
+  .matgrid-inline{grid-template-columns:1fr 1fr}
+  .config-step.has-images{grid-template-columns:1fr}
+  .config-thumbs{border-left:0;border-top:1px solid var(--line);border-radius:0 0 16px 16px}
+  .config-thumbs img{width:auto;height:100px;flex:1}
+  .proc-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="topbar">
+    <div class="topbar-left">
+      <img class="topbar-logo" src="logo/La_Plan%C3%A8te_Bois-removebg-preview.png" alt="La Planète Bois">
+    </div>
+  </div>
+
+  <div class="layout">
+    <aside class="sidebar" id="sidebar"></aside>
+    <div>
+      <div class="viewer" id="viewer"></div>
+      <div class="actions">
+        <div class="counter" id="counter"></div>
+        <div class="actionbtns">
+          <button class="btn prev" onclick="prevSlide()">← Précédent</button>
+          <button class="btn next" onclick="nextSlide()">Suivant →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
+  <button class="lightbox-close" onclick="closeLightbox(event)">✕</button>
+  <button class="lb-nav lb-prev" onclick="lbNav(-1,event)">‹</button>
+  <button class="lb-nav lb-next" onclick="lbNav(1,event)">›</button>
+  <img id="lbImg" src="" alt="">
+  <div class="lb-counter" id="lbCounter"></div>
+</div>
+
+<script>
+const P="Photo/", PT="Photo/terrasses/", PA="Photo/atelier/", PP="Présentation la planete bois/photos/";
+
+const slides = [
+// ===== 0 — ACCUEIL =====
+{
+  id:"cover",title:"Accueil",layout:"hero",
+  slideTitle:"LA PLANÈTE BOIS",
+  subtitle:"Terrasses · Pergolas · Carports · Sur mesure",
+  body:"Fabricant artisanal · Villeneuve-Saint-Germain · Aisne",
+  images:[P+"Gemini_Generated_Image_12oqp412oqp412oq - Modifié.png"],
+  info:{title:"Ce que le client comprend immédiatement",items:["Entreprise locale avec un vrai atelier","Pas de sous-traitance, pas d'intermédiaire","Garantie décennale + assurance RC pro"]}
+},
+// ===== 1 — NOTRE ATELIER =====
+{
+  id:"atelier",title:"Notre atelier",layout:"threepoints",
+  eyebrow:"Qui sommes-nous",
+  slideTitle:"Fabriqué ici, posé par nous",
+  subtitle:"La Planète Bois, c'est un atelier de fabrication installé à Villeneuve-Saint-Germain, dans l'Aisne.",
+  points:[
+    {title:"Atelier local",text:"Fabrication à Villeneuve-Saint-Germain, pas de sous-traitance.",detail:"Chaque projet commence par une visite technique gratuite. Nos fabrications sortent de notre atelier — pas d'intermédiaire. On maîtrise chaque étape, de la conception à la pose."},
+    {title:"100% sur mesure",text:"Chaque projet est adapté à votre maison et votre terrain.",detail:"Nous prenons le temps de comprendre votre terrain, vos usages et vos attentes avant de concevoir — pas un catalogue, pas un kit standard."},
+    {title:"Fabrication + Pose",text:"Nos charpentiers posent ce qu'ils ont eux-mêmes fabriqué.",detail:"Chaque pièce est inspectée, découpée avec précision, pré-assemblée et contrôlée en atelier. Les éléments sont numérotés pour une pose rapide."}
+  ],
+  images:[PA+"IMG_4643.JPG"],
+  info:{title:"Message à faire passer",items:["Vous n'achetez pas un produit standard","Le projet est pensé pour votre maison","La proximité simplifie tout"]}
+},
+// ===== 2 — POURQUOI NOUS =====
+{
+  id:"whyus",title:"Pourquoi nous",layout:"whyus-full",
+  eyebrow:"Pourquoi nous choisir",
+  slideTitle:"Six raisons de nous faire confiance",
+  subtitle:"",
+  points:[
+    {title:"Atelier local",text:"Un vrai atelier, de vraies réalisations, un interlocuteur proche.",detail:"Tout est fabriqué dans notre atelier de Villeneuve-Saint-Germain. Matériaux sélectionnés, découpe précise, assemblage soigné."},
+    {title:"Maîtrise technique",text:"Structure, portance, ancrage : chaque projet étudié avec rigueur.",detail:"Notre expérience des structures bois complexes (dont les dômes géodésiques) se retrouve dans chaque réalisation."},
+    {title:"Fabrication + Pose",text:"Nos charpentiers posent ce qu'ils ont fabriqué.",detail:"Pas de sous-traitance, une seule équipe responsable de A à Z. Cohérence totale."},
+    {title:"Interlocuteur unique",text:"Un seul contact du devis à la réception du chantier.",detail:"Un parcours plus simple, plus clair et plus rassurant."},
+    {title:"Matériaux sélectionnés",text:"Essences choisies selon votre projet et budget.",detail:"Pin traité autoclave, douglas, mélèze ou bois exotique. Chaque planche inspectée selon l'usage."},
+    {title:"Garantie décennale",text:"Tous nos ouvrages sont couverts 10 ans.",detail:"Assurance RC professionnelle et décennale. Structures, fixations, matériaux : vous êtes protégé."}
+  ],
+  info:{title:"Arguments de réassurance",items:["Fabrication locale = proximité + réactivité","Interlocuteur unique = simplicité","Garantie décennale = tranquillité totale"]}
+},
+// ===== 3 — ENGAGEMENTS =====
+{
+  id:"engagements",title:"Engagements",layout:"engagements",
+  eyebrow:"Nos engagements",
+  slideTitle:"Ce qui est garanti",
+  subtitle:"Des choix exigeants pour des projets qui durent.",
+  guarantees:[
+    {title:"Garantie décennale",text:"Tous les ouvrages couverts 10 ans.",detail:"Structures, fixations, matériaux — investissement protégé en toute sérénité."},
+    {title:"Garantie biennale",text:"Éléments dissociables couverts 2 ans.",detail:"Équipements et finitions remplaçables sans toucher à la structure."},
+    {title:"Parfait achèvement",text:"Toute malfaçon corrigée après réception.",detail:"Signalement sous 30 jours, intervention rapide."},
+    {title:"Assurance RC Pro",text:"Responsabilité civile professionnelle.",detail:"L'entreprise est couverte pour votre tranquillité totale."},
+    {title:"Normes DTU",text:"Documents Techniques Unifiés respectés.",detail:"Chantier suivi de bout en bout, conformité assurée."},
+    {title:"Zéro sous-traitance",text:"Notre équipe de bout en bout.",detail:"Nos artisans posent ce qu'ils ont fabriqué. Une seule équipe responsable."},
+    {title:"Essences sélectionnées",text:"Chaque planche inspectée selon l'usage.",detail:"Finitions soignées pour un rendu esthétique durable."},
+    {title:"Visite technique gratuite",text:"Déplacement offert dans notre zone.",detail:"On se déplace chez vous pour comprendre votre terrain avant de concevoir."}
+  ],
+  info:{title:"Rassurer le client",items:["Insister sur la décennale : souvent ce que les clients cherchent","Zéro sous-traitance = cohérence et responsabilité","Visite gratuite = pas d'engagement"]}
+},
+// ===== 4 — NOS MÉTIERS =====
+{
+  id:"metiers",title:"Nos métiers",layout:"threepoints",
+  eyebrow:"Nos métiers",
+  slideTitle:"Tout est conçu et fabriqué sur mesure",
+  subtitle:"Des ouvrages bois conçus et réalisés intégralement dans notre atelier.",
+  points:[
+    {title:"Terrasses bois",text:"Lames, lambourdes, structures porteuses préparées sur mesure.",detail:"Terrain plat, en pente, pilotis, plage de piscine. Pin traité autoclave, douglas, mélèze ou bois exotique."},
+    {title:"Pergolas",text:"Poteaux, traverses, couverture : chaque élément usiné en atelier.",detail:"Adossées ou autoportées, avec ou sans couverture. Polycarbonate, lames orientables, toile tendue ou toiture pleine."},
+    {title:"Carports",text:"Structures solides, portée libre jusqu'à 6 m.",detail:"Simple, double, avec rangement intégré. Bac acier, tuiles, polycarbonate ou toiture végétalisée."}
+  ],
+  extraPoints:[
+    {title:"Bardages & habillages",text:"Finitions extérieures en bois naturel."},
+    {title:"Clôtures & portails",text:"Découpes personnalisées, traitements adaptés."},
+    {title:"Projets sur mesure",text:"Dômes, structures complexes, aménagements uniques."}
+  ],
+  images:[PP+"composite.png"],
+  info:{title:"Chaque métier est un point d'entrée",items:["Le client peut venir pour une terrasse et repartir avec un projet global","Montrez les photos de chaque catégorie"]}
+},
+// ===== 5 — TERRASSES =====
+{
+  id:"terrasses",title:"Terrasses",layout:"terrasses",
+  eyebrow:"Terrasses bois",
+  slideTitle:"Créez un vrai espace de vie extérieur",
+  subtitle:"Terrain plat, en pente, pilotis, plage piscine — chaque terrasse est pensée pour votre maison.",
+  images:[
+    P+"6a009a96-6d1f-4ffd-a0da-5a7d1ace60a7.png",
+    P+"b73337b0-54cd-4ed6-8e20-36153e557665.png",
+    PT+"35760216-82d2-4137-b961-28d95856916a.jpg",
+    PT+"4A309A75-02E7-4B67-BA25-973D5427C6A1.jpg",
+    P+"terrasse-pergolas Mme Pouis.jpg",
+    P+"Gemini_Generated_Image_12oqp412oqp412oq - Modifié.png"
+  ],
+  captions:["Terrasse maison de caractère","Perspective terrasse bois","Réalisation sur mesure","Aménagement extérieur","Terrasse & pergola — Réalisation client","Terrasse & pergola bois"],
+  config:[
+    {num:"1",label:"Choix des lames",text:"Essence de bois ou composite selon vos usages et votre budget.",
+      options:[
+        {name:"Douglas",tag:"naturel",image:PP+"douglas.png",detail:"Bois français résistant, chaleureux et naturellement durable."},
+        {name:"Mélèze",tag:"chaleureux",image:PP+"mélèze.jpg",detail:"Teinte dorée, excellente résistance aux intempéries."},
+        {name:"IPE",tag:"haut de gamme",image:PP+"IPE.jpg",detail:"Bois exotique d'exception, longévité 40+ ans."},
+        {name:"Cumaru",tag:"durable",image:PP+"cumaru.jpg",detail:"Alternative à l'IPE, excellent rapport qualité-prix."},
+        {name:"Composite",tag:"sans entretien",image:PP+"composite.png",detail:"Moderne, large choix de coloris, zéro entretien."}
+      ]},
+    {num:"2",label:"Fondation",text:"Dalle carré béton avec plaque de fixation, ou dalle béton directement.",
+      options:[
+        {name:"Plaque + fixation",tag:"standard",image:"Photo/Photo présentation/plaque+fixation.png",detail:"Platine métallique sur dalle béton. Solution polyvalente et ajustable."},
+        {name:"Dalle béton",tag:"direct",image:"Photo/Photo présentation/d53fbefd-d829-4cba-b486-9bea9dc73075.jpg",detail:"Pose directe sur dalle béton existante ou coulée sur mesure."}
+      ]},
+    {num:"3",label:"Escalier",text:"Marches bois assorties à la terrasse, contremarches, limon sur mesure.",side:true,
+      options:[
+        {name:"Escalier bois",tag:"sur mesure",image:"Photo/Photo présentation/IMG_7288 (1).jpg",detail:"Marches bois assorties à la terrasse, contremarches, limon sur mesure."}
+      ]},
+    {num:"4",label:"Garde-corps",text:"Obligatoire au-delà d'1 m de hauteur. Bois, inox, câbles ou verre.",side:true,
+      options:[
+        {name:"Garde-corps",tag:"sécurité",image:"Photo/Photo présentation/Photo-dme--5.jpg",detail:"Obligatoire au-delà d'1 m de hauteur. Bois, inox, câbles ou verre."}
+      ]}
+  ],
+  info:{title:"Points clés terrasse",items:["Chaque terrasse est configurée selon vos usages, votre terrain et votre budget","Structure porteuse dimensionnée : portance, lambourdes, ancrage","Montrez les options au client pour co-construire le projet"]}
+},
+// ===== 6 — PERGOLAS =====
+{
+  id:"pergolas",title:"Pergolas",layout:"gallery4",
+  eyebrow:"Pergolas bois",
+  slideTitle:"Prolongez votre espace de vie",
+  subtitle:"Adossées ou autoportées. Protection soleil, pluie légère, support végétal.",
+  images:[
+    P+"pergola mr piquet.jpg",
+    P+"terrasse-pergolas Mme Pouis.jpg",
+    P+"pexels-jonathanborba-5563471.jpg",
+    P+"vecteezy_a-wooden-pergola-over-a-beach_69913963.jpg"
+  ],
+  captions:["Pergola moderne — salon ombragé","Terrasse & Pergola — Réalisation client","Pergola bois — espace piscine","Structure pergola bois massif"],
+  chips:["Adossée ou autoportée","Couverture au choix","Support végétal","Espace spa / cuisine d'été"],
+  process:[
+    {num:"1",label:"Étude & implantation",text:"Relevé de cotes, orientation, choix du type (adossée ou autoportée)."},
+    {num:"2",label:"Scellement des poteaux",text:"Ancrage sur platines ou dans le sol, mise d'aplomb."},
+    {num:"3",label:"Montage de la structure",text:"Poteaux, poutres, traverses assemblés selon les plans d'atelier."},
+    {num:"4",label:"Couverture",text:"Pose de la toiture : polycarbonate, lames orientables, toile ou bac acier."},
+    {num:"5",label:"Finitions",text:"Habillages, gouttières, éclairage intégré si prévu, nettoyage."}
+  ],
+  info:{title:"Valeur d'usage",items:["Créer une vraie pièce extérieure protégée","Apporter ombre, confort et structure","Montrer la cohérence avec la maison"]}
+},
+// ===== 7 — CARPORTS =====
+{
+  id:"carports",title:"Carports",layout:"gallery5",
+  eyebrow:"Carports bois",
+  slideTitle:"Protection et intégration",
+  subtitle:"Simple, double, avec rangement. Portée libre jusqu'à 6 m sans poteau intermédiaire.",
+  images:[
+    P+"20be8d24-3f0b-4fb7-a3da-c529793b2aed.png",
+    P+"Caport Mr jacque Soissons.png",
+    P+"carport Mme laura Compniègne.png",
+    P+"uri_ifs___M_CdzNr3Ch5BX-zficsZll82Gl8oEjL-iTGJ5CToYwtfI.jpg",
+    P+"robby-henry-1hsmgqi9uiw-unsplash.jpg"
+  ],
+  captions:["Carport bois avec bardage","Réalisation Soissons","Réalisation Compiègne","Carport toit plat","Abri deux-roues"],
+  chips:["1 ou 2 véhicules","Camping-car","Rangement intégré","Résistance vent Eurocode"],
+  process:[
+    {num:"1",label:"Étude & dimensionnement",text:"Nombre de véhicules, portée libre, intégration architecturale."},
+    {num:"2",label:"Fondations",text:"Plots béton, platines d'ancrage ou scellement selon le terrain."},
+    {num:"3",label:"Ossature bois",text:"Montage des poteaux et charpente, contreventement, vérification d'aplomb."},
+    {num:"4",label:"Toiture",text:"Pose de la couverture : bac acier, tuiles, polycarbonate ou végétalisé."},
+    {num:"5",label:"Finitions",text:"Bardage latéral, gouttières, rangement intégré si prévu, nettoyage."}
+  ],
+  info:{title:"Arguments carport",items:["Le carport doit être utile ET bien intégré","Personnalisation = vrai argument différenciant","Montrer les différents styles"]}
+},
+// ===== 8 — SUR-MESURE =====
+{
+  id:"surmesure",title:"Sur mesure",layout:"gallery6",
+  eyebrow:"Projets sur mesure",
+  slideTitle:"Votre projet unique",
+  subtitle:"Dômes géodésiques, structures complexes, aménagements d'exception — notre savoir-faire d'origine au service de vos idées.",
+  images:[
+    PT+"IMG_6876.jpg",
+    PT+"IMG_7288 (1).jpg",
+    PT+"Bastogne_Dome_Louvent-093.jpg",
+    PT+"Bastogne_Dome_Louvent-094.jpg",
+    PT+"Bastogne_Dome_Louvent-102.jpg",
+    PT+"Bastogne_Dome_Louvent-116 (1) - Modifié.jpg"
+  ],
+  captions:["Dôme avec jacuzzi","Dôme & terrasse bois","Projet Bastogne","Bastogne — vue rapprochée","Détail structure","Vue d'ensemble"],
+  chips:["Dôme géodésique","Vitrage","Terrasse intégrée","Bardage","Projet unique"],
+  info:{title:"Le sur-mesure comme preuve de compétence",items:["Si on sait faire un dôme géodésique, on sait tout faire en structure bois","C'est l'origine de l'entreprise — ça rassure sur le niveau technique","Tout ce que le client imagine en bois, on peut le concevoir et le fabriquer"]}
+},
+// ===== 9 — VOTRE PROJET =====
+{
+  id:"process",title:"Votre projet",layout:"process-grid",
+  eyebrow:"Votre projet",
+  slideTitle:"Comment se passe votre projet ?",
+  subtitle:"Un processus clair, du premier contact à la réception de votre ouvrage.",
+  steps:[
+    {icon:"chat",num:"01",label:"Premier échange",text:"Nous discutons de votre projet par téléphone ou formulaire. Réponse rapide.",detail:"Après un premier échange, nous qualifions votre projet et comprenons vos attentes : usages, style, budget, contraintes du terrain. Pas de déplacement inutile."},
+    {icon:"clipboard",num:"02",label:"Qualification du projet",text:"Nous évaluons la faisabilité, le type d'ouvrage et les contraintes techniques.",detail:"Type de bois adapté, configuration du terrain, accès, réglementation… On anticipe tout avant de vous proposer une solution."},
+    {icon:"camera",num:"03",label:"Photos, dimensions, visite",text:"Envoyez vos photos et dimensions. Visite sur place si nécessaire, gratuite.",detail:"On se déplace chez vous pour relever les cotes exactes, évaluer le terrain et vous conseiller. Déplacement gratuit dans notre zone de 60 km."},
+    {icon:"doc",num:"04",label:"Devis détaillé",text:"Chiffrage précis avec plans, choix des matériaux et planning prévisionnel.",detail:"Vous recevez un devis détaillé sous 24h avec plans et chiffrage. Un seul interlocuteur du devis à la réception du chantier."},
+    {icon:"hammer",num:"05",label:"Fabrication et préparation",text:"Découpe, usinage et pré-assemblage en atelier avant le départ sur chantier.",detail:"Chaque pièce est inspectée, découpée avec précision et contrôlée. Pré-assemblage à blanc en atelier pour vérifier l'ajustement. Délai : 2 à 7 jours ouvrés."},
+    {icon:"star",num:"06",label:"Pose et finitions",text:"Installation par notre équipe, vérifications, nettoyage et réception du chantier.",detail:"Pièces numérotées et organisées pour une pose rapide et propre. Nos charpentiers posent ce qu'ils ont eux-mêmes fabriqué. Réception du chantier ensemble."}
+  ],
+  info:{title:"Ce que cette slide enlève",items:["La peur de l'inconnu","Le sentiment que le projet est compliqué","Le doute sur les prochaines étapes"]}
+},
+// ===== 10 — CONTACT =====
+{
+  id:"contact",title:"Contact",layout:"contact",
+  eyebrow:"Prochaine étape",
+  slideTitle:"Parlons de votre projet",
+  subtitle:"Réponse rapide. Étude de projet offerte.",
+  contact:{phone:"06 52 73 74 74",email:"laplanetebois@gmail.com",address:"Villeneuve-Saint-Germain\nLa Tuilerie — Route de Compiègne, 02600",hours:"Lun-Ven : 8h-18h · Sam : 9h-13h"},
+  images:["logo/La_Planète_Bois-removebg-preview.png"],
+  info:{title:"Prochaine étape",items:["Valider le besoin avec le client","Proposer la visite technique gratuite","Confirmer le délai de devis : sous 24h"]}
+}
+];
+
+// =============== ICONS SVG ===============
+const ICONS = {
+  chat:'<svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>',
+  clipboard:'<svg viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 14l2 2 4-4"/></svg>',
+  camera:'<svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>',
+  doc:'<svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>',
+  hammer:'<svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>',
+  star:'<svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>'
+};
+
+// =============== MOTEUR ===============
+let index=0, lbImages=[], lbIdx=0;
+
+function e(s){return(s||'').replace(/</g,'&lt;').replace(/\n/g,'<br>')}
+
+function imgBlock(src,caption){
+  return '<div class="galleryitem" onclick="openLightbox(\''+encodeURI(src)+'\')"><img src="'+encodeURI(src)+'" alt=""><div class="grad"></div>'+(caption?'<div class="img-caption">'+e(caption)+'</div>':'')+'</div>';
+}
+
+function infoBox(s){
+  if(!s.info)return'';
+  return '<div class="infobox"><h4>📋 '+e(s.info.title)+'</h4><ul>'+s.info.items.map(function(i){return'<li>'+e(i)+'</li>'}).join('')+'</ul></div>';
+}
+function processBlock(s){
+  if(!s.process)return'';
+  return '<div class="install-process"><div class="install-title">Procédé d\'installation</div><div class="install-steps">'+
+    s.process.map(function(p){
+      var imgs='';
+      if(p.images){imgs='<div class="step-imgs">'+p.images.map(function(im){return'<div class="step-img-wrap"><img src="'+encodeURI(im.src)+'" alt="'+e(im.label)+'" onclick="event.stopPropagation();openLightbox(\''+encodeURI(im.src)+'\')"><div class="step-img-label">'+e(im.label)+'</div></div>'}).join('')+'</div>';}
+      return'<div class="install-step"><div class="step-num">'+p.num+'</div><div class="step-label">'+e(p.label)+'</div><div class="step-text">'+e(p.text)+'</div>'+imgs+'</div>';
+    }).join('')+
+  '</div></div>';
+}
+
+function renderSidebar(){
+  document.getElementById('sidebar').innerHTML=
+    '<div class="sidehead">Sommaire</div>'+
+    slides.map(function(s,i){
+      return '<button class="navbtn'+(i===index?' active':'')+'" onclick="goTo('+i+')"><span class="navnum">'+String(i+1).padStart(2,'0')+'</span> '+e(s.title)+'</button>';
+    }).join('')+
+    '<div class="help"><strong style="color:var(--accent)">💡 Astuce</strong><br>Cliquez sur les cartes, étapes et essences pour afficher plus de détails devant le client.</div>';
+}
+
+function renderSlide(){
+  var s=slides[index];
+  document.getElementById('counter').textContent=(index+1)+' / '+slides.length;
+  var html='';
+
+  // HERO
+  if(s.layout==='hero'){
+    html='<div class="slide hero">'+
+      '<div class="bg"><img src="'+encodeURI(s.images[0])+'" alt=""></div>'+
+      '<div class="overlay"></div>'+
+      '<div class="content">'+
+        '<img class="hero-logo" src="logo/La_Plan%C3%A8te_Bois-removebg-preview.png" alt="La Planète Bois">'+
+        '<div class="hero-line"></div>'+
+        '<div class="subtitle">'+e(s.subtitle)+'</div>'+
+        '<div class="body">'+e(s.body)+'</div>'+
+        '<div class="hero-badges">'+
+          '<div class="hero-badge"><div class="hb-icon"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div><div class="hb-label">Atelier<br>local</div></div>'+
+          '<div class="hero-badge"><div class="hb-icon"><svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg></div><div class="hb-label">Fabrication<br>+ Pose</div></div>'+
+          '<div class="hero-badge"><div class="hb-icon"><svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div><div class="hb-label">Garantie<br>décennale</div></div>'+
+          '<div class="hero-badge"><div class="hb-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div><div class="hb-label">Devis<br>sous 24h</div></div>'+
+          '<div class="hero-badge"><div class="hb-icon"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><div class="hb-label">Interlocuteur<br>unique</div></div>'+
+        '</div>'+
+        '<div class="hero-mention">SAS DomeBulle · Garantie décennale · RCS Soissons</div>'+
+      '</div>'+
+    '</div>';
+  }
+
+  // THREEPOINTS
+  if(s.layout==='threepoints'){
+    html='<div class="slide threepoints"><div class="left pad"><div class="eyebrow">'+e(s.eyebrow)+'</div><div class="title">'+e(s.slideTitle)+'</div>'+(s.subtitle?'<div class="subtitle">'+e(s.subtitle)+'</div>':'')+
+    '<div class="threegrid">'+s.points.map(function(p){return'<div class="pointcard" onclick="this.classList.toggle(\'open\')"><h3>'+e(p.title)+'</h3><p>'+e(p.text)+'</p>'+(p.detail?'<div class="detail">'+e(p.detail)+'</div><div class="expand-hint">▸ Cliquer pour détails</div>':'')+'</div>'}).join('')+'</div>'+
+    (s.extraPoints?'<div class="threegrid" style="margin-top:10px">'+s.extraPoints.map(function(p){return'<div class="pointcard" onclick="this.classList.toggle(\'open\')"><h3>'+e(p.title)+'</h3><p>'+e(p.text)+'</p>'+(p.detail?'<div class="detail">'+e(p.detail)+'</div><div class="expand-hint">▸ Cliquer pour détails</div>':'')+'</div>'}).join('')+'</div>':'')+
+    infoBox(s)+'</div><div class="imagewrap" onclick="openLightbox(\''+encodeURI(s.images[0])+'\')"><img src="'+encodeURI(s.images[0])+'" alt=""></div></div>';
+  }
+
+  // WHYUS-FULL
+  if(s.layout==='whyus-full'){
+    var whyIcons=[
+      '<svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>',
+      '<svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>',
+      '<svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>',
+      '<svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>',
+      '<svg viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4l3 3v5a2 2 0 01-2 2h-1"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>',
+      '<svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>'
+    ];
+    html='<div class="slide whyus-full"><div class="head"><div class="eyebrow">'+e(s.eyebrow)+'</div><div class="title">'+e(s.slideTitle)+'</div></div><div class="whygrid">'+
+    s.points.map(function(p,i){return'<div class="whycard" onclick="this.classList.toggle(\'open\')"><div class="why-icon">'+whyIcons[i%whyIcons.length]+'</div><div class="why-body"><h3>'+e(p.title)+'</h3><p>'+e(p.text)+'</p>'+(p.detail?'<div class="why-detail">'+e(p.detail)+'</div><div class="why-hint">▸ Détails</div>':'')+'</div></div>'}).join('')+
+    '</div></div>';
+  }
+
+  // ENGAGEMENTS
+  if(s.layout==='engagements'){
+    html='<div class="slide gallery4"><div class="head"><div class="eyebrow">'+e(s.eyebrow)+'</div><div class="title">'+e(s.slideTitle)+'</div><div class="subtitle">'+e(s.subtitle)+'</div></div><div class="guarantee-grid">'+
+    s.guarantees.map(function(g){return'<div class="guarantee-card" onclick="this.classList.toggle(\'open\')"><h3><span class="check">✓</span> '+e(g.title)+'</h3><p>'+e(g.text)+'</p><div class="detail">'+e(g.detail)+'</div></div>'}).join('')+
+    '</div><div style="padding:0 36px 24px">'+infoBox(s)+'</div></div>';
+  }
+
+  // GALLERY4
+  if(s.layout==='gallery4'){
+    html='<div class="slide gallery4"><div class="head"><div class="eyebrow">'+e(s.eyebrow)+'</div><div class="title">'+e(s.slideTitle)+'</div><div class="subtitle">'+e(s.subtitle)+'</div>'+(s.chips?'<div class="chips">'+s.chips.map(function(c){return'<span class="chip">'+e(c)+'</span>'}).join('')+'</div>':'')+'</div><div class="gallerygrid4">'+s.images.map(function(img,i){return imgBlock(img,s.captions&&s.captions[i])}).join('')+'</div>'+processBlock(s)+'<div style="padding:0 36px 24px">'+infoBox(s)+'</div></div>';
+  }
+
+  // GALLERY5 (3 top + 2 bottom)
+  if(s.layout==='gallery5'){
+    html='<div class="slide gallery6"><div class="head"><div class="eyebrow">'+e(s.eyebrow)+'</div><div class="title">'+e(s.slideTitle)+'</div><div class="subtitle">'+e(s.subtitle)+'</div>'+(s.chips?'<div class="chips">'+s.chips.map(function(c){return'<span class="chip">'+e(c)+'</span>'}).join('')+'</div>':'')+'</div><div class="gallerygrid3">'+s.images.slice(0,3).map(function(img,i){return imgBlock(img,s.captions&&s.captions[i])}).join('')+'</div><div class="gallerygrid2">'+s.images.slice(3).map(function(img,i){return imgBlock(img,s.captions&&s.captions[i+3])}).join('')+'</div>'+processBlock(s)+'<div style="padding:0 36px 24px">'+infoBox(s)+'</div></div>';
+  }
+
+  // GALLERY6
+  if(s.layout==='gallery6'){
+    html='<div class="slide gallery6"><div class="head"><div class="eyebrow">'+e(s.eyebrow)+'</div><div class="title">'+e(s.slideTitle)+'</div><div class="subtitle">'+e(s.subtitle)+'</div>'+(s.chips?'<div class="chips">'+s.chips.map(function(c){return'<span class="chip">'+e(c)+'</span>'}).join('')+'</div>':'')+'</div><div class="gallerygrid6">'+s.images.map(function(img,i){return imgBlock(img,s.captions&&s.captions[i])}).join('')+'</div><div style="padding:0 36px 24px">'+infoBox(s)+'</div></div>';
+  }
+
+  // TERRASSES (gallery + configuration)
+  if(s.layout==='terrasses'){
+    html='<div class="slide gallery6"><div class="head"><div class="eyebrow">'+e(s.eyebrow)+'</div><div class="title">'+e(s.slideTitle)+'</div><div class="subtitle">'+e(s.subtitle)+'</div></div>'+
+    '<div class="gallerygrid6">'+s.images.map(function(img,i){return imgBlock(img,s.captions&&s.captions[i])}).join('')+'</div>'+
+    '<div class="config-section"><div class="config-title">Configurez votre terrasse</div><div class="config-steps">'+
+    s.config.map(function(step){
+      if(step.side){
+        // 1 seule image : déroulant avec photo à côté du texte
+        var o=step.options[0];
+        return '<div class="config-step config-expand" onclick="this.classList.toggle(\'open\')">'+
+          '<div class="config-step-left"><div class="config-step-header"><div class="config-step-num">'+step.num+'</div><div class="config-step-info"><h3>'+e(step.label)+'</h3><p>'+e(step.text)+'</p></div><div class="config-step-arrow">▸</div></div>'+
+          '<div class="config-single"><div class="config-single-text"><p>'+e(o.detail)+'</p></div>'+
+          '<div class="config-single-img"><img src="'+encodeURI(o.image)+'" alt="'+e(o.name)+'" onclick="event.stopPropagation();openSingleLB(\''+encodeURI(o.image)+'\')"></div></div>'+
+          '</div></div>';
+      } else {
+        // Plusieurs options : déroulant avec grille
+        return '<div class="config-step config-expand" onclick="this.classList.toggle(\'open\')">'+
+          '<div class="config-step-left"><div class="config-step-header"><div class="config-step-num">'+step.num+'</div><div class="config-step-info"><h3>'+e(step.label)+'</h3><p>'+e(step.text)+'</p></div><div class="config-step-arrow">▸</div></div>'+
+          '<div class="config-options">'+step.options.map(function(o){
+            return '<div class="config-opt"><img src="'+encodeURI(o.image)+'" alt="'+e(o.name)+'" onclick="event.stopPropagation();openSingleLB(\''+encodeURI(o.image)+'\')"><div class="opt-name">'+e(o.name)+'</div><div class="opt-tag">'+e(o.tag)+'</div><div class="opt-detail">'+e(o.detail)+'</div></div>';
+          }).join('')+'</div></div></div>';
+      }
+    }).join('')+
+    '</div></div>'+
+    '<div style="padding:0 36px 24px">'+infoBox(s)+'</div></div>';
+  }
+
+  // PROCESS-GRID
+  if(s.layout==='process-grid'){
+    html='<div class="slide process-grid"><div class="head"><div class="eyebrow">'+e(s.eyebrow)+'</div><div class="title">'+e(s.slideTitle)+'</div><div class="subtitle">'+e(s.subtitle)+'</div></div><div class="proc-grid">'+
+    s.steps.map(function(st){return'<div class="proc-card" onclick="this.classList.toggle(\'open\')"><div class="proc-icon">'+ICONS[st.icon]+'</div><div class="proc-num">'+e(st.num)+'</div><h3>'+e(st.label)+'</h3><p>'+e(st.text)+'</p><div class="proc-detail">'+e(st.detail)+'</div></div>'}).join('')+
+    '</div><div style="padding:0 36px 24px">'+infoBox(s)+'</div></div>';
+  }
+
+  // CONTACT
+  if(s.layout==='contact'){
+    var c=s.contact;
+    html='<div class="slide contact"><div class="pad"><div class="eyebrow">'+e(s.eyebrow)+'</div><div class="title">'+e(s.slideTitle)+'</div><div class="subtitle">'+e(s.subtitle)+'</div><div class="contactbox">'+
+    '<div class="contactline" onclick="copyText(\'0652737474\',this)"><span class="ci">☎</span><div><strong>'+e(c.phone)+'</strong><br><span style="font-size:11px;color:var(--muted)">Cliquer pour copier</span></div></div>'+
+    '<div class="contactline" onclick="copyText(\''+c.email+'\',this)"><span class="ci">✉</span><div><strong>'+e(c.email)+'</strong><br><span style="font-size:11px;color:var(--muted)">Cliquer pour copier</span></div></div>'+
+    '<div class="contactline"><span class="ci">◉</span><div>'+e(c.address)+'</div></div>'+
+    '<div class="contactline"><span class="ci">◷</span><div>'+e(c.hours)+'</div></div>'+
+    '</div><div class="chips" style="margin-top:16px"><span class="chip" style="background:#f6e7cd;font-weight:700;color:var(--accent-dark)">Garantie décennale</span><span class="chip" style="background:#f6e7cd;font-weight:700;color:var(--accent-dark)">Atelier local</span><span class="chip" style="background:#f6e7cd;font-weight:700;color:var(--accent-dark)">Fabrication + Pose</span></div>'+
+    infoBox(s)+'</div><div class="contactright"><img src="'+encodeURI(s.images[0])+'" alt="La Planète Bois"></div></div>';
+  }
+
+  document.getElementById('viewer').innerHTML=html;
+}
+
+// NAV
+function goTo(i){index=i;renderSidebar();renderSlide();window.scrollTo({top:0,behavior:'smooth'})}
+function prevSlide(){if(index>0)goTo(index-1)}
+function nextSlide(){if(index<slides.length-1)goTo(index+1)}
+
+// LIGHTBOX
+function openLightbox(src){
+  var s=slides[index];
+  if(s.images&&s.images.length>1){lbImages=s.images.map(encodeURI)}
+  else{lbImages=[src]}
+  lbIdx=lbImages.indexOf(src);if(lbIdx<0)lbIdx=0;
+  showLB();
+}
+function openSingleLB(src){
+  lbImages=[src];lbIdx=0;showLB();
+}
+function openEssenceLB(src){
+  var s=slides[index];
+  if(s.materials){lbImages=s.materials.map(function(m){return encodeURI(m.image)})}
+  else{lbImages=[src]}
+  lbIdx=lbImages.indexOf(src);if(lbIdx<0)lbIdx=0;
+  showLB();
+}
+function showLB(){
+  document.getElementById('lbImg').src=lbImages[lbIdx];
+  document.getElementById('lbCounter').textContent=lbImages.length>1?(lbIdx+1)+' / '+lbImages.length:'';
+  document.querySelector('.lb-prev').style.display=lbImages.length>1?'':'none';
+  document.querySelector('.lb-next').style.display=lbImages.length>1?'':'none';
+  document.getElementById('lightbox').classList.add('open');
+}
+function closeLightbox(ev){
+  if(ev&&ev.target!==ev.currentTarget&&!ev.target.classList.contains('lightbox-close'))return;
+  document.getElementById('lightbox').classList.remove('open');
+}
+function lbNav(dir,ev){
+  ev.stopPropagation();
+  lbIdx=(lbIdx+dir+lbImages.length)%lbImages.length;
+  document.getElementById('lbImg').src=lbImages[lbIdx];
+  document.getElementById('lbCounter').textContent=(lbIdx+1)+' / '+lbImages.length;
+}
+
+// COPY
+function copyText(text,el){
+  navigator.clipboard.writeText(text).then(function(){
+    var sp=el.querySelector('span[style]');
+    if(sp){var o=sp.textContent;sp.textContent='✓ Copié !';sp.style.color='var(--accent)';setTimeout(function(){sp.textContent=o;sp.style.color=''},2000)}
+  }).catch(function(){});
+}
+
+// KEYBOARD
+window.addEventListener('keydown',function(ev){
+  if(document.getElementById('lightbox').classList.contains('open')){
+    if(ev.key==='Escape')closeLightbox(ev);
+    if(ev.key==='ArrowLeft')lbNav(-1,ev);
+    if(ev.key==='ArrowRight')lbNav(1,ev);
+    return;
+  }
+  if(ev.key==='ArrowRight'||ev.key===' ')nextSlide();
+  if(ev.key==='ArrowLeft')prevSlide();
+});
+
+renderSidebar();renderSlide();
+</script>
+</body>
+</html>
