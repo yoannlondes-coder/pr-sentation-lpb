@@ -465,10 +465,11 @@ const slides = [
         {name:"Cumaru",tag:"durable",image:PP+"cumaru.jpg",detail:"Alternative à l'IPE, excellent rapport qualité-prix."},
         {name:"Composite",tag:"sans entretien",image:PT+"terrasse cyril.png",detail:"Moderne, large choix de coloris, zéro entretien."}
       ]},
-    {num:"2",label:"Fondation",text:"Dalle carré béton avec plaque de fixation, ou dalle béton directement.",
+    {num:"2",label:"Fondation",text:"Trois types de fondation selon votre terrain et votre projet.",
       options:[
-        {name:"Plaque + fixation",tag:"standard",image:"plaque+fixation.png",detail:"Platine métallique sur dalle béton. Solution polyvalente et ajustable."},
-        {name:"Dalle béton",tag:"direct",image:"d53fbefd-d829-4cba-b486-9bea9dc73075.jpg",detail:"Pose directe sur dalle béton existante ou coulée sur mesure."}
+        {name:"Plaque + fixation",tag:"standard",image:PP+"plaque + fixation.png",detail:"Platine métallique sur dalle béton. Solution polyvalente et ajustable."},
+        {name:"Plots bétons + fixation",tag:"terrain naturel",image:PP+"plot béton.png",detail:"Plots béton coulés ou préfabriqués avec fixation. Idéal pour terrain naturel."},
+        {name:"Dalle béton + plots plastiques",tag:"existant",image:PP+"e71fa423-c958-4143-bdeb-9067170cbb2c.png",detail:"Plots plastiques réglables sur dalle béton existante. Mise à niveau facile."}
       ]},
     {num:"3",label:"Escalier",text:"Marches bois assorties à la terrasse, contremarches, limon sur mesure.",type:"toggle",image:"IMG_7288 (1).jpg"},
     {num:"4",label:"Garde-corps",text:"Obligatoire au-delà d'1 m de hauteur. Bois, inox, câbles ou verre.",type:"toggle",image:"Photo-dme--5.jpg"},
@@ -493,17 +494,21 @@ const slides = [
   config:[
     {num:"1",label:"Type de pergola",text:"Choisissez le type d'implantation.",
       options:[
-        {name:"Adossée",tag:"classique",detail:"Fixée au mur de la maison, prolonge l'espace de vie existant."},
-        {name:"Autoportée",tag:"indépendante",detail:"Structure indépendante, positionnement libre dans le jardin."}
+        {name:"Adossée",tag:"classique",image:P+"terrasse-pergolas Mme Pouis.jpg",detail:"Fixée au mur de la maison, prolonge l'espace de vie existant."},
+        {name:"Autoportée",tag:"indépendante",image:P+"Gemini_Generated_Image_12oqp412oqp412oq - Modifié.png",detail:"Structure indépendante, positionnement libre dans le jardin."}
       ]},
     {num:"2",label:"Couverture",text:"Choisissez le type de couverture.",
       options:[
-        {name:"Polycarbonate",tag:"lumière",detail:"Laisse passer la lumière tout en protégeant de la pluie."},
-        {name:"Lames orientables",tag:"modulable",detail:"Régulation de la lumière et de la ventilation selon vos envies."},
-        {name:"Toile tendue",tag:"esthétique",detail:"Effet voile, légèreté et protection solaire."},
-        {name:"Bac acier",tag:"étanche",detail:"Protection totale contre les intempéries, toiture durable."}
+        {name:"Lame bois",tag:"naturel",image:P+"pergola mr piquet.jpg",detail:"Couverture en lames de bois, esthétique chaleureuse et naturelle."},
+        {name:"Polycarbonate",tag:"lumière",image:P+"pergola poly.png",detail:"Laisse passer la lumière tout en protégeant de la pluie."},
+        {name:"Bioclimatique",tag:"modulable",image:P+"pergola briocli.png",detail:"Lames orientables motorisées, régulation de la lumière et ventilation."}
       ]},
-    {num:"3",label:"Dimensions",text:"Longueur × largeur × hauteur souhaitées.",type:"text"}
+    {num:"3",label:"Fondation",text:"Deux types de fondation selon votre terrain.",
+      options:[
+        {name:"Plaque + fixation",tag:"standard",image:PP+"plaque + fixation.png",detail:"Platine métallique sur dalle béton. Solution polyvalente et ajustable."},
+        {name:"Plots bétons + fixation",tag:"terrain naturel",image:PP+"plot béton.png",detail:"Plots béton coulés ou préfabriqués avec fixation. Idéal pour terrain naturel."}
+      ]},
+    {num:"4",label:"Dimensions",text:"Longueur × largeur × hauteur souhaitées.",type:"text"}
   ],
   info:{title:"Valeur d'usage",items:["Créer une vraie pièce extérieure protégée","Apporter ombre, confort et structure","Montrer la cohérence avec la maison"]}
 },
@@ -529,14 +534,22 @@ const slides = [
         {name:"2 véhicules",tag:"double",detail:"Carport double, portée libre sans poteau central."},
         {name:"Camping-car",tag:"grande hauteur",detail:"Structure renforcée, hauteur et largeur adaptées."}
       ]},
-    {num:"2",label:"Toiture",text:"Choisissez le type de couverture.",
+    {num:"2",label:"Nombre de pans",text:"Toiture à un ou deux pans.",
       options:[
-        {name:"Bac acier",tag:"résistant",detail:"Durable, étanche, large choix de coloris."},
-        {name:"Tuiles",tag:"traditionnel",detail:"Intégration harmonieuse avec l'habitat existant."},
-        {name:"Polycarbonate",tag:"lumière",detail:"Laisse passer la lumière naturelle."}
+        {name:"1 pan",tag:"simple",detail:"Toiture inclinée d'un seul côté. Design épuré et écoulement des eaux facilité."},
+        {name:"2 pans",tag:"classique",detail:"Toiture en pente des deux côtés. Style traditionnel, meilleure intégration architecturale."}
       ]},
-    {num:"3",label:"Rangement intégré",text:"Espace de rangement latéral pour outils, vélos, etc.",type:"toggle"},
-    {num:"4",label:"Dimensions",text:"Longueur × largeur × hauteur souhaitées.",type:"text"}
+    {num:"3",label:"Toiture",text:"Choisissez le type de couverture.",
+      options:[
+        {name:"Bac acier",tag:"résistant",image:P+"robby-henry-1hsmgqi9uiw-unsplash.jpg",detail:"Durable, étanche, large choix de coloris."},
+        {name:"Polycarbonate",tag:"lumière",image:P+"carport poly.png",detail:"Laisse passer la lumière naturelle."}
+      ]},
+    {num:"4",label:"Fondation",text:"Deux types de fondation selon votre terrain.",
+      options:[
+        {name:"Plaque + fixation",tag:"standard",image:PP+"plaque + fixation.png",detail:"Platine métallique sur dalle béton. Solution polyvalente et ajustable."},
+        {name:"Plots bétons + fixation",tag:"terrain naturel",image:PP+"plot béton.png",detail:"Plots béton coulés ou préfabriqués avec fixation. Idéal pour terrain naturel."}
+      ]},
+    {num:"5",label:"Dimensions",text:"Longueur × largeur × hauteur souhaitées.",type:"text"}
   ],
   info:{title:"Arguments carport",items:["Le carport doit être utile ET bien intégré","Personnalisation = vrai argument différenciant","Montrer les différents styles"]}
 },
@@ -590,7 +603,7 @@ const slides = [
 {
   id:"contact",title:"Contact",layout:"contact",
   eyebrow:"Prochaine étape",
-  slideTitle:"Parlons de votre projet",
+  slideTitle:"Nous contacter",
   subtitle:"Réponse rapide. Étude de projet offerte.",
   contact:{phone:"06 47 61 69 19",email:"laplanetebois@gmail.com",address:"Villeneuve-Saint-Germain\nLa Tuilerie — Route de Compiègne, 02600",hours:"Lun-Ven : 8h-18h · Sam : 9h-13h"},
   images:["La_Planète_Bois-removebg-preview.png"],
@@ -1027,7 +1040,7 @@ function renderSlide(){
     '<div class="contactline"><span class="ci">◉</span><div>'+e(c.address)+'</div></div>'+
     '<div class="contactline"><span class="ci">◷</span><div>'+e(c.hours)+'</div></div>'+
     '</div><div class="chips" style="margin-top:16px"><span class="chip" style="background:#f6e7cd;font-weight:700;color:var(--accent-dark)">Garantie décennale</span><span class="chip" style="background:#f6e7cd;font-weight:700;color:var(--accent-dark)">Atelier local</span><span class="chip" style="background:#f6e7cd;font-weight:700;color:var(--accent-dark)">Fabrication + Pose</span></div>'+
-    infoBox(s)+'</div><div class="contactright"><img src="'+encodeURI(s.images[0])+'" alt="La Planète Bois"></div></div>';
+    infoBox(s)+'</div><div class="contactright" style="position:relative"><img src="'+encodeURI(s.images[0])+'" alt="La Planète Bois"><div style="position:absolute;bottom:12px;right:12px;text-align:center"><img src="https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=https%3A%2F%2Fwa.me%2F33780956701" alt="WhatsApp QR" style="width:100px;height:100px;border-radius:10px;border:1px solid var(--line);box-shadow:0 4px 12px rgba(0,0,0,.1)"><div style="margin-top:4px;font-size:10px;color:var(--accent);font-weight:700">WhatsApp</div></div></div></div>';
   }
 
   document.getElementById('viewer').innerHTML=html;
