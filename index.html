@@ -283,7 +283,7 @@ body{color:#fff;background:radial-gradient(circle at top left,#1b1612 0%,var(--b
 <div class="app">
   <div class="topbar">
     <div class="topbar-left">
-      <img class="topbar-logo" src="logo/La_Plan%C3%A8te_Bois-removebg-preview.png" alt="La Planète Bois">
+      <img class="topbar-logo" src="La_Planète_Bois-removebg-preview.png" alt="La Planète Bois">
     </div>
   </div>
 
@@ -312,7 +312,7 @@ body{color:#fff;background:radial-gradient(circle at top left,#1b1612 0%,var(--b
 </div>
 
 <script>
-const P="Photo/", PT="Photo/terrasses/", PA="Photo/atelier/", PP="Présentation la planete bois/photos/";
+const P="", PT="", PA="", PP="";
 
 const slides = [
 // ===== 0 — ACCUEIL =====
@@ -417,16 +417,16 @@ const slides = [
       ]},
     {num:"2",label:"Fondation",text:"Dalle carré béton avec plaque de fixation, ou dalle béton directement.",
       options:[
-        {name:"Plaque + fixation",tag:"standard",image:"Photo/Photo présentation/plaque+fixation.png",detail:"Platine métallique sur dalle béton. Solution polyvalente et ajustable."},
-        {name:"Dalle béton",tag:"direct",image:"Photo/Photo présentation/d53fbefd-d829-4cba-b486-9bea9dc73075.jpg",detail:"Pose directe sur dalle béton existante ou coulée sur mesure."}
+        {name:"Plaque + fixation",tag:"standard",image:"plaque+fixation.png",detail:"Platine métallique sur dalle béton. Solution polyvalente et ajustable."},
+        {name:"Dalle béton",tag:"direct",image:"d53fbefd-d829-4cba-b486-9bea9dc73075.jpg",detail:"Pose directe sur dalle béton existante ou coulée sur mesure."}
       ]},
     {num:"3",label:"Escalier",text:"Marches bois assorties à la terrasse, contremarches, limon sur mesure.",side:true,
       options:[
-        {name:"Escalier bois",tag:"sur mesure",image:"Photo/Photo présentation/IMG_7288 (1).jpg",detail:"Marches bois assorties à la terrasse, contremarches, limon sur mesure."}
+        {name:"Escalier bois",tag:"sur mesure",image:"IMG_7288 (1).jpg",detail:"Marches bois assorties à la terrasse, contremarches, limon sur mesure."}
       ]},
     {num:"4",label:"Garde-corps",text:"Obligatoire au-delà d'1 m de hauteur. Bois, inox, câbles ou verre.",side:true,
       options:[
-        {name:"Garde-corps",tag:"sécurité",image:"Photo/Photo présentation/Photo-dme--5.jpg",detail:"Obligatoire au-delà d'1 m de hauteur. Bois, inox, câbles ou verre."}
+        {name:"Garde-corps",tag:"sécurité",image:"Photo-dme--5.jpg",detail:"Obligatoire au-delà d'1 m de hauteur. Bois, inox, câbles ou verre."}
       ]}
   ],
   info:{title:"Points clés terrasse",items:["Chaque terrasse est configurée selon vos usages, votre terrain et votre budget","Structure porteuse dimensionnée : portance, lambourdes, ancrage","Montrez les options au client pour co-construire le projet"]}
@@ -519,7 +519,7 @@ const slides = [
   slideTitle:"Parlons de votre projet",
   subtitle:"Réponse rapide. Étude de projet offerte.",
   contact:{phone:"06 52 73 74 74",email:"laplanetebois@gmail.com",address:"Villeneuve-Saint-Germain\nLa Tuilerie — Route de Compiègne, 02600",hours:"Lun-Ven : 8h-18h · Sam : 9h-13h"},
-  images:["logo/La_Planète_Bois-removebg-preview.png"],
+  images:["La_Planète_Bois-removebg-preview.png"],
   info:{title:"Prochaine étape",items:["Valider le besoin avec le client","Proposer la visite technique gratuite","Confirmer le délai de devis : sous 24h"]}
 }
 ];
@@ -578,7 +578,7 @@ function renderSlide(){
       '<div class="bg"><img src="'+encodeURI(s.images[0])+'" alt=""></div>'+
       '<div class="overlay"></div>'+
       '<div class="content">'+
-        '<img class="hero-logo" src="logo/La_Plan%C3%A8te_Bois-removebg-preview.png" alt="La Planète Bois">'+
+        '<img class="hero-logo" src="La_Planète_Bois-removebg-preview.png" alt="La Planète Bois">'+
         '<div class="hero-line"></div>'+
         '<div class="subtitle">'+e(s.subtitle)+'</div>'+
         '<div class="body">'+e(s.body)+'</div>'+
