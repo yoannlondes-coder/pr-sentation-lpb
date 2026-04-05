@@ -863,28 +863,21 @@ function generatePDF(){
     checkPage(20);
     drawLine();
     sectionTitle('Photos du terrain');
-    var maxW=55,maxH=42,gap=6;
-    var cols=3;
-    var col=0;
+    var contentW=pageW-margin*2;
     projectPhotos.forEach(function(ph){
-      checkPage(maxH+8);
-      var x=margin+col*(maxW+gap);
       try{
         var img=new Image();img.src=ph;
         var ratio=img.width/img.height;
-        var drawW,drawH;
-        if(ratio>=maxW/maxH){drawW=maxW;drawH=maxW/ratio;}
-        else{drawH=maxH;drawW=maxH*ratio;}
-        var offX=(maxW-drawW)/2;
-        var offY=(maxH-drawH)/2;
+        var drawW=contentW,drawH=contentW/ratio;
+        if(drawH>180){drawH=180;drawW=180*ratio;}
+        checkPage(drawH+12);
+        var offX=(contentW-drawW)/2;
         doc.setDrawColor(220,215,205);doc.setLineWidth(0.3);
-        doc.roundedRect(x,y,maxW,maxH,2,2,'S');
-        doc.addImage(ph,'JPEG',x+offX,y+offY,drawW,drawH);
+        doc.roundedRect(margin+offX-1,y-1,drawW+2,drawH+2,2,2,'S');
+        doc.addImage(ph,'JPEG',margin+offX,y,drawW,drawH);
+      y+=drawH+8;
       }catch(err){}
-      col++;
-      if(col>=cols){col=0;y+=maxH+gap;}
     });
-    if(col!==0)y+=maxH+gap;
   }
 
   // === PIED DE PAGE ===
