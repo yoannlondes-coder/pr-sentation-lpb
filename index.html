@@ -283,7 +283,7 @@ body{color:#fff;background:radial-gradient(circle at top left,#1b1612 0%,var(--b
 <div class="app">
   <div class="topbar">
     <div class="topbar-left">
-      <img class="topbar-logo" src="La_Planète_Bois-removebg-preview.png" alt="La Planète Bois">
+      <img class="topbar-logo" src="La_Plan%C3%A8te_Bois-removebg-preview.png" alt="La Planète Bois">
     </div>
   </div>
 
@@ -388,7 +388,7 @@ const slides = [
     {title:"Clôtures & portails",text:"Découpes personnalisées, traitements adaptés."},
     {title:"Projets sur mesure",text:"Dômes, structures complexes, aménagements uniques."}
   ],
-  images:[PP+"composite.png"],
+  images:[PT+"terrasse cyril.png"],
   info:{title:"Chaque métier est un point d'entrée",items:["Le client peut venir pour une terrasse et repartir avec un projet global","Montrez les photos de chaque catégorie"]}
 },
 // ===== 5 — TERRASSES =====
@@ -401,7 +401,7 @@ const slides = [
     P+"6a009a96-6d1f-4ffd-a0da-5a7d1ace60a7.png",
     P+"b73337b0-54cd-4ed6-8e20-36153e557665.png",
     PT+"35760216-82d2-4137-b961-28d95856916a.jpg",
-    PT+"4A309A75-02E7-4B67-BA25-973D5427C6A1.jpg",
+    PT+"IMG_7288 (1).jpg",
     P+"terrasse-pergolas Mme Pouis.jpg",
     P+"Gemini_Generated_Image_12oqp412oqp412oq - Modifié.png"
   ],
@@ -518,7 +518,7 @@ const slides = [
   eyebrow:"Prochaine étape",
   slideTitle:"Parlons de votre projet",
   subtitle:"Réponse rapide. Étude de projet offerte.",
-  contact:{phone:"06 52 73 74 74",email:"laplanetebois@gmail.com",address:"Villeneuve-Saint-Germain\nLa Tuilerie — Route de Compiègne, 02600",hours:"Lun-Ven : 8h-18h · Sam : 9h-13h"},
+  contact:{phone:"06 47 61 69 19",email:"laplanetebois@gmail.com",address:"Villeneuve-Saint-Germain\nLa Tuilerie — Route de Compiègne, 02600",hours:"Lun-Ven : 8h-18h · Sam : 9h-13h"},
   images:["La_Planète_Bois-removebg-preview.png"],
   info:{title:"Prochaine étape",items:["Valider le besoin avec le client","Proposer la visite technique gratuite","Confirmer le délai de devis : sous 24h"]}
 }
@@ -578,7 +578,7 @@ function renderSlide(){
       '<div class="bg"><img src="'+encodeURI(s.images[0])+'" alt=""></div>'+
       '<div class="overlay"></div>'+
       '<div class="content">'+
-        '<img class="hero-logo" src="La_Planète_Bois-removebg-preview.png" alt="La Planète Bois">'+
+        '<img class="hero-logo" src="La_Plan%C3%A8te_Bois-removebg-preview.png" alt="La Planète Bois">'+
         '<div class="hero-line"></div>'+
         '<div class="subtitle">'+e(s.subtitle)+'</div>'+
         '<div class="body">'+e(s.body)+'</div>'+
@@ -677,7 +677,7 @@ function renderSlide(){
   if(s.layout==='contact'){
     var c=s.contact;
     html='<div class="slide contact"><div class="pad"><div class="eyebrow">'+e(s.eyebrow)+'</div><div class="title">'+e(s.slideTitle)+'</div><div class="subtitle">'+e(s.subtitle)+'</div><div class="contactbox">'+
-    '<div class="contactline" onclick="copyText(\'0652737474\',this)"><span class="ci">☎</span><div><strong>'+e(c.phone)+'</strong><br><span style="font-size:11px;color:var(--muted)">Cliquer pour copier</span></div></div>'+
+    '<div class="contactline" onclick="copyText(\'0647616919\',this)"><span class="ci">☎</span><div><strong>'+e(c.phone)+'</strong><br><span style="font-size:11px;color:var(--muted)">Cliquer pour copier</span></div></div>'+
     '<div class="contactline" onclick="copyText(\''+c.email+'\',this)"><span class="ci">✉</span><div><strong>'+e(c.email)+'</strong><br><span style="font-size:11px;color:var(--muted)">Cliquer pour copier</span></div></div>'+
     '<div class="contactline"><span class="ci">◉</span><div>'+e(c.address)+'</div></div>'+
     '<div class="contactline"><span class="ci">◷</span><div>'+e(c.hours)+'</div></div>'+
