@@ -7,6 +7,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
 <title>La Planète Bois — Présentation commerciale</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <style>
 :root{
   --bg:#0c0a09;--bg2:#16120f;--panel:#141110;
@@ -86,6 +87,20 @@ body{color:#fff;background:radial-gradient(circle at top left,#1b1612 0%,var(--b
 .pointcard.open .detail{max-height:300px;margin-top:8px}
 .pointcard .expand-hint{font-size:10px;color:var(--accent);margin-top:6px;font-weight:700}
 .pointcard.open .expand-hint{display:none}
+/* METIERS 4 COLONNES */
+.metiers4-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;padding:0 36px 24px}
+.metier-col{background:rgba(255,255,255,.85);border:1px solid var(--line);border-radius:16px;overflow:hidden;cursor:pointer;transition:all .3s}
+.metier-col:hover{transform:translateY(-4px);box-shadow:0 12px 28px rgba(34,25,19,.1)}
+.metier-col img{width:100%;height:180px;object-fit:cover;display:block;transition:transform .4s}
+.metier-col:hover img{transform:scale(1.04)}
+.metier-col .metier-body{padding:14px 16px}
+.metier-col .metier-body h3{margin:0 0 4px;font-size:17px;color:var(--text);font-family:'Cormorant Garamond',serif;font-weight:700}
+.metier-col .metier-body p{margin:0;font-size:12px;color:var(--muted);line-height:1.45}
+.metier-col .metier-detail{max-height:0;overflow:hidden;transition:max-height .4s;font-size:11.5px;color:#5a5047;line-height:1.5;margin-top:0;border-top:0 solid var(--line)}
+.metier-col.open .metier-detail{max-height:200px;margin-top:8px;padding-top:8px;border-top-width:1px}
+
+.point-img-preview img{width:100%;height:auto;border-radius:10px;border:1px solid var(--line);margin-top:8px;cursor:zoom-in;transition:transform .3s,box-shadow .3s}
+.point-img-preview img:hover{transform:scale(1.02);box-shadow:0 6px 18px rgba(34,25,19,.1)}
 
 /* GALLERIES */
 .gallery4 .head,.gallery3 .head,.gallery2 .head,.gallery6 .head,.materials .head,.process-grid .head,.contact .head,.info-slide .head{padding:28px 36px 14px}
@@ -134,11 +149,68 @@ body{color:#fff;background:radial-gradient(circle at top left,#1b1612 0%,var(--b
 .config-step.open .config-options{max-height:600px;margin-top:14px}
 .config-opt{background:rgba(255,255,255,.85);border:1px solid var(--line);border-radius:12px;overflow:hidden;text-align:center;transition:all .3s}
 .config-opt:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(34,25,19,.06)}
-.config-opt img{width:100%;height:90px;object-fit:cover;display:block;cursor:zoom-in}
+.config-opt img{width:100%;height:180px;object-fit:cover;display:block;cursor:zoom-in}
 .config-opt .opt-name{font-size:12.5px;font-weight:700;color:var(--text);padding:6px 8px 2px;font-family:'Cormorant Garamond',serif}
 .config-opt .opt-tag{font-size:10px;color:var(--accent);font-weight:700;text-transform:uppercase;letter-spacing:.04em;padding:0 8px 6px}
 .config-opt .opt-detail{font-size:10.5px;color:var(--muted);line-height:1.4;padding:0 8px 8px;display:none}
 .config-step.open .config-opt .opt-detail{display:block}
+.config-opt.selected{border:2px solid var(--accent);background:rgba(184,115,51,.08);box-shadow:0 4px 16px rgba(184,115,51,.15)}
+.config-opt.selected::after{content:'✓';position:absolute;top:8px;right:8px;width:22px;height:22px;border-radius:50%;background:var(--accent);color:#fff;font-size:12px;display:flex;align-items:center;justify-content:center;font-weight:700}
+.config-opt{position:relative}
+
+/* TOGGLE OUI/NON */
+.config-toggle{display:flex;gap:10px;align-items:center;max-height:0;overflow:hidden;transition:max-height .5s;margin-top:0}
+.config-step.open .config-toggle{max-height:200px;margin-top:14px}
+.config-toggle-img{width:120px;height:80px;object-fit:cover;border-radius:10px;border:1px solid var(--line);cursor:zoom-in;flex-shrink:0}
+.toggle-btns{display:flex;gap:8px}
+.toggle-btn{padding:10px 28px;border-radius:12px;border:2px solid var(--line);background:rgba(255,255,255,.8);cursor:pointer;font-family:'Lato',sans-serif;font-size:14px;font-weight:700;color:var(--text);transition:all .3s}
+.toggle-btn:hover{border-color:var(--accent);background:rgba(184,115,51,.05)}
+.toggle-btn.selected{border-color:var(--accent);background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff}
+
+/* CONFIG TEXT */
+.config-textarea{max-height:0;overflow:hidden;transition:max-height .5s;margin-top:0}
+.config-step.open .config-textarea{max-height:200px;margin-top:14px}
+.config-textarea textarea{width:100%;height:100px;border:1px solid var(--line);border-radius:12px;padding:12px;font-family:'Lato',sans-serif;font-size:13px;resize:vertical;color:var(--text);background:rgba(255,255,255,.8)}
+.config-textarea textarea:focus{outline:none;border-color:var(--accent)}
+
+/* BOUTON VALIDER CONFIG */
+.config-validate{margin-top:16px;text-align:right}
+.btn-validate{padding:12px 32px;border-radius:14px;border:0;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;font-size:14px;font-weight:700;font-family:'Lato',sans-serif;cursor:pointer;transition:all .3s;box-shadow:0 6px 20px rgba(184,115,51,.25)}
+.btn-validate:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(184,115,51,.35)}
+
+/* RECAP */
+.recap-section{padding:28px 36px}
+.recap-client{margin-bottom:20px}
+.recap-client label{font-size:13px;font-weight:700;color:var(--text);display:block;margin-bottom:6px}
+.recap-client input{width:100%;max-width:400px;padding:12px 16px;border:1px solid var(--line);border-radius:12px;font-family:'Lato',sans-serif;font-size:15px;color:var(--text);background:rgba(255,255,255,.8)}
+.recap-client input:focus{outline:none;border-color:var(--accent)}
+.recap-empty{color:var(--muted);font-size:14px;font-style:italic;padding:20px 0}
+.recap-cards{display:flex;flex-direction:column;gap:12px}
+.recap-card{background:rgba(255,255,255,.85);border:1px solid var(--line);border-radius:16px;padding:18px 20px;overflow:hidden}
+.recap-card h3{margin:0 0 10px;font-size:18px;color:var(--text);font-family:'Cormorant Garamond',serif;font-weight:700;display:flex;align-items:center;gap:8px}
+.recap-card h3 .rc-icon{width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;font-size:12px;display:flex;align-items:center;justify-content:center;font-weight:700}
+.recap-items{display:grid;grid-template-columns:1fr 1fr;gap:6px 16px}
+.recap-item{font-size:13px;color:var(--text);display:flex;gap:6px}
+.recap-item .ri-label{color:var(--muted);min-width:120px}
+.recap-item .ri-value{font-weight:700}
+.recap-card .recap-remove{float:right;background:none;border:none;color:#c0392b;font-size:11px;cursor:pointer;font-weight:700;font-family:'Lato',sans-serif}
+.recap-card .recap-remove:hover{text-decoration:underline}
+.recap-actions{margin-top:24px;display:flex;gap:12px;justify-content:flex-end}
+.btn-pdf{padding:14px 36px;border-radius:14px;border:0;background:linear-gradient(135deg,#2c3e50,#34495e);color:#fff;font-size:15px;font-weight:700;font-family:'Lato',sans-serif;cursor:pointer;transition:all .3s;box-shadow:0 6px 20px rgba(0,0,0,.2)}
+.btn-pdf:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(0,0,0,.3)}
+
+/* PHOTOS CLIENT */
+.recap-photos{margin-top:18px}
+.recap-photos label{font-size:13px;font-weight:700;color:var(--text);display:block;margin-bottom:8px}
+.photos-grid{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-start}
+.photo-thumb{width:100px;height:100px;border-radius:12px;object-fit:cover;border:1px solid var(--line);cursor:zoom-in;transition:transform .3s}
+.photo-thumb:hover{transform:scale(1.05)}
+.photo-add{width:100px;height:100px;border-radius:12px;border:2px dashed var(--accent);background:rgba(184,115,51,.05);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;transition:all .3s;gap:4px}
+.photo-add:hover{background:rgba(184,115,51,.12);border-color:var(--accent2)}
+.photo-add svg{width:28px;height:28px;stroke:var(--accent);fill:none;stroke-width:1.5}
+.photo-add span{font-size:10px;color:var(--accent);font-weight:700}
+.photo-remove{position:absolute;top:-6px;right:-6px;width:20px;height:20px;border-radius:50%;background:#c0392b;color:#fff;border:none;font-size:11px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-weight:700;box-shadow:0 2px 6px rgba(0,0,0,.2)}
+.photo-wrap{position:relative;display:inline-block}
 .config-single{max-height:0;overflow:hidden;transition:max-height .5s;display:grid;grid-template-columns:1fr 200px;gap:16px;align-items:center;margin-top:0}
 .config-step.open .config-single{max-height:400px;margin-top:14px}
 .config-single-text p{margin:0;font-size:13px;color:#5a5047;line-height:1.5}
@@ -263,6 +335,7 @@ body{color:#fff;background:radial-gradient(circle at top left,#1b1612 0%,var(--b
   .proc-grid{grid-template-columns:1fr 1fr}
   .matgrid-inline{grid-template-columns:repeat(3,1fr)}
   .config-thumbs img{width:85px}
+  .metiers4-grid{grid-template-columns:1fr 1fr}
 }
 @media(max-width:760px){
   .viewer{min-height:auto}.slide{min-height:auto}.galleryitem{min-height:180px}
@@ -304,7 +377,7 @@ body{color:#fff;background:radial-gradient(circle at top left,#1b1612 0%,var(--b
 
 <!-- LIGHTBOX -->
 <div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
-  <button class="lightbox-close" onclick="closeLightbox(event)">✕</button>
+  <button class="lightbox-close" onclick="document.getElementById('lightbox').classList.remove('open')">✕</button>
   <button class="lb-nav lb-prev" onclick="lbNav(-1,event)">‹</button>
   <button class="lb-nav lb-next" onclick="lbNav(1,event)">›</button>
   <img id="lbImg" src="" alt="">
@@ -326,14 +399,14 @@ const slides = [
 },
 // ===== 1 — NOTRE ATELIER =====
 {
-  id:"atelier",title:"Notre atelier",layout:"threepoints",
+  id:"atelier",title:"Fabrication locale",layout:"threepoints",
   eyebrow:"Qui sommes-nous",
-  slideTitle:"Fabriqué ici, posé par nous",
+  slideTitle:"Fabrication locale",
   subtitle:"La Planète Bois, c'est un atelier de fabrication installé à Villeneuve-Saint-Germain, dans l'Aisne.",
   points:[
-    {title:"Atelier local",text:"Fabrication à Villeneuve-Saint-Germain, pas de sous-traitance.",detail:"Chaque projet commence par une visite technique gratuite. Nos fabrications sortent de notre atelier — pas d'intermédiaire. On maîtrise chaque étape, de la conception à la pose."},
-    {title:"100% sur mesure",text:"Chaque projet est adapté à votre maison et votre terrain.",detail:"Nous prenons le temps de comprendre votre terrain, vos usages et vos attentes avant de concevoir — pas un catalogue, pas un kit standard."},
-    {title:"Fabrication + Pose",text:"Nos charpentiers posent ce qu'ils ont eux-mêmes fabriqué.",detail:"Chaque pièce est inspectée, découpée avec précision, pré-assemblée et contrôlée en atelier. Les éléments sont numérotés pour une pose rapide."}
+    {title:"Atelier local",text:"Fabrication à Villeneuve-Saint-Germain, pas de sous-traitance.",detail:"Notre atelier nous permet une fabrication 100% maîtrisée, de la découpe à l'assemblage. Aucun intermédiaire : nous contrôlons chaque étape, de la conception à l'installation sur votre chantier.",image:PP+"Capture d'écran 2026-04-05 144816.png"},
+    {title:"100% sur mesure",text:"Chaque projet est adapté à votre maison et votre terrain.",detail:"Chaque réalisation est entièrement personnalisable : dimensions, essences de bois, finitions, coloris. Une large gamme d'options est disponible pour s'adapter parfaitement à votre maison et à vos envies."},
+    {title:"Fabrication + Pose",text:"Une seule équipe, de l'atelier à votre chantier.",detail:"Nous maîtrisons la fabrication ainsi que la pose : cette double compétence nous permet d'être plus efficaces, plus rapides et de garantir un résultat sans défaut. Pas de sous-traitance, pas de mauvaise surprise."}
   ],
   images:[PA+"IMG_4643.JPG"],
   info:{title:"Message à faire passer",items:["Vous n'achetez pas un produit standard","Le projet est pensé pour votre maison","La proximité simplifie tout"]}
@@ -345,50 +418,27 @@ const slides = [
   slideTitle:"Six raisons de nous faire confiance",
   subtitle:"",
   points:[
-    {title:"Atelier local",text:"Un vrai atelier, de vraies réalisations, un interlocuteur proche.",detail:"Tout est fabriqué dans notre atelier de Villeneuve-Saint-Germain. Matériaux sélectionnés, découpe précise, assemblage soigné."},
-    {title:"Maîtrise technique",text:"Structure, portance, ancrage : chaque projet étudié avec rigueur.",detail:"Notre expérience des structures bois complexes (dont les dômes géodésiques) se retrouve dans chaque réalisation."},
-    {title:"Fabrication + Pose",text:"Nos charpentiers posent ce qu'ils ont fabriqué.",detail:"Pas de sous-traitance, une seule équipe responsable de A à Z. Cohérence totale."},
-    {title:"Interlocuteur unique",text:"Un seul contact du devis à la réception du chantier.",detail:"Un parcours plus simple, plus clair et plus rassurant."},
-    {title:"Matériaux sélectionnés",text:"Essences choisies selon votre projet et budget.",detail:"Pin traité autoclave, douglas, mélèze ou bois exotique. Chaque planche inspectée selon l'usage."},
-    {title:"Garantie décennale",text:"Tous nos ouvrages sont couverts 10 ans.",detail:"Assurance RC professionnelle et décennale. Structures, fixations, matériaux : vous êtes protégé."}
+    {title:"Atelier local",text:"Un vrai atelier, de vraies réalisations, un interlocuteur proche.",detail:"Tout est fabriqué dans notre atelier à Villeneuve-Saint-Germain. Matériaux sélectionnés, découpe précise, assemblage soigné."},
+    {title:"Maîtrise technique",text:"Structure, portance, ancrage : chaque projet étudié avec rigueur.",detail:"Forts de 3 ans d'expérience et plus de 30 réalisations, nous maîtrisons chaque contrainte technique pour concevoir des structures bois solides, durables et parfaitement adaptées à chaque configuration."},
+    {title:"Fabrication + Pose",text:"Nos charpentiers fabriquent et posent chaque ouvrage.",detail:"Aucune sous-traitance. Une seule équipe, de la coupe en atelier à la pose sur chantier. Résultat : cohérence totale, zéro perte d'information, responsabilité pleine et entière."},
+    {title:"Interlocuteur unique",text:"Un seul contact du devis à la réception du chantier.",detail:"Vous échangez avec la même personne de la première visite jusqu'à la livraison. Pas de transfert, pas de flou. Un suivi clair, réactif et engagé."},
+    {title:"Matériaux sélectionnés",text:"Essences choisies selon votre projet et votre budget.",detail:"Pin traité autoclave, douglas, mélèze ou bois exotique — tous certifiés PEFC. Chaque planche est sélectionnée selon l'usage, l'exposition et la durabilité attendue."},
+    {title:"Garantie décennale",text:"Tous nos ouvrages sont couverts 10 ans.",detail:"RC professionnelle et garantie décennale incluses. Structure, fixations, matériaux : chaque élément est couvert. Vous investissez en toute sérénité."}
   ],
   info:{title:"Arguments de réassurance",items:["Fabrication locale = proximité + réactivité","Interlocuteur unique = simplicité","Garantie décennale = tranquillité totale"]}
 },
-// ===== 3 — ENGAGEMENTS =====
+// ===== 3 — NOS MÉTIERS =====
 {
-  id:"engagements",title:"Engagements",layout:"engagements",
-  eyebrow:"Nos engagements",
-  slideTitle:"Ce qui est garanti",
-  subtitle:"Des choix exigeants pour des projets qui durent.",
-  guarantees:[
-    {title:"Garantie décennale",text:"Tous les ouvrages couverts 10 ans.",detail:"Structures, fixations, matériaux — investissement protégé en toute sérénité."},
-    {title:"Garantie biennale",text:"Éléments dissociables couverts 2 ans.",detail:"Équipements et finitions remplaçables sans toucher à la structure."},
-    {title:"Parfait achèvement",text:"Toute malfaçon corrigée après réception.",detail:"Signalement sous 30 jours, intervention rapide."},
-    {title:"Assurance RC Pro",text:"Responsabilité civile professionnelle.",detail:"L'entreprise est couverte pour votre tranquillité totale."},
-    {title:"Normes DTU",text:"Documents Techniques Unifiés respectés.",detail:"Chantier suivi de bout en bout, conformité assurée."},
-    {title:"Zéro sous-traitance",text:"Notre équipe de bout en bout.",detail:"Nos artisans posent ce qu'ils ont fabriqué. Une seule équipe responsable."},
-    {title:"Essences sélectionnées",text:"Chaque planche inspectée selon l'usage.",detail:"Finitions soignées pour un rendu esthétique durable."},
-    {title:"Visite technique gratuite",text:"Déplacement offert dans notre zone.",detail:"On se déplace chez vous pour comprendre votre terrain avant de concevoir."}
-  ],
-  info:{title:"Rassurer le client",items:["Insister sur la décennale : souvent ce que les clients cherchent","Zéro sous-traitance = cohérence et responsabilité","Visite gratuite = pas d'engagement"]}
-},
-// ===== 4 — NOS MÉTIERS =====
-{
-  id:"metiers",title:"Nos métiers",layout:"threepoints",
+  id:"metiers",title:"Nos métiers",layout:"metiers4",
   eyebrow:"Nos métiers",
   slideTitle:"Tout est conçu et fabriqué sur mesure",
   subtitle:"Des ouvrages bois conçus et réalisés intégralement dans notre atelier.",
-  points:[
-    {title:"Terrasses bois",text:"Lames, lambourdes, structures porteuses préparées sur mesure.",detail:"Terrain plat, en pente, pilotis, plage de piscine. Pin traité autoclave, douglas, mélèze ou bois exotique."},
-    {title:"Pergolas",text:"Poteaux, traverses, couverture : chaque élément usiné en atelier.",detail:"Adossées ou autoportées, avec ou sans couverture. Polycarbonate, lames orientables, toile tendue ou toiture pleine."},
-    {title:"Carports",text:"Structures solides, portée libre jusqu'à 6 m.",detail:"Simple, double, avec rangement intégré. Bac acier, tuiles, polycarbonate ou toiture végétalisée."}
+  metiers:[
+    {title:"Terrasses",image:PT+"terrasse cyril.png",text:"Lames, lambourdes, structures porteuses préparées sur mesure.",detail:"Terrain plat, en pente, pilotis, plage de piscine. Pin traité autoclave, douglas, mélèze ou bois exotique."},
+    {title:"Pergolas",image:P+"pergola mr piquet.jpg",text:"Poteaux, traverses, couverture : chaque élément usiné en atelier.",detail:"Adossées ou autoportées, avec ou sans couverture. Polycarbonate, lames orientables, toile tendue ou toiture pleine."},
+    {title:"Carports",image:P+"20be8d24-3f0b-4fb7-a3da-c529793b2aed.png",text:"Structures solides, portée libre jusqu'à 6 m.",detail:"Simple, double, avec rangement intégré. Bac acier, tuiles, polycarbonate ou toiture végétalisée."},
+    {title:"Sur mesure",image:PT+"IMG_6876.jpg",text:"Dômes géodésiques, structures complexes, aménagements uniques.",detail:"Notre savoir-faire d'origine au service de vos idées les plus ambitieuses."}
   ],
-  extraPoints:[
-    {title:"Bardages & habillages",text:"Finitions extérieures en bois naturel."},
-    {title:"Clôtures & portails",text:"Découpes personnalisées, traitements adaptés."},
-    {title:"Projets sur mesure",text:"Dômes, structures complexes, aménagements uniques."}
-  ],
-  images:[PT+"terrasse cyril.png"],
   info:{title:"Chaque métier est un point d'entrée",items:["Le client peut venir pour une terrasse et repartir avec un projet global","Montrez les photos de chaque catégorie"]}
 },
 // ===== 5 — TERRASSES =====
@@ -413,21 +463,16 @@ const slides = [
         {name:"Mélèze",tag:"chaleureux",image:PP+"mélèze.jpg",detail:"Teinte dorée, excellente résistance aux intempéries."},
         {name:"IPE",tag:"haut de gamme",image:PP+"IPE.jpg",detail:"Bois exotique d'exception, longévité 40+ ans."},
         {name:"Cumaru",tag:"durable",image:PP+"cumaru.jpg",detail:"Alternative à l'IPE, excellent rapport qualité-prix."},
-        {name:"Composite",tag:"sans entretien",image:PT+"terrasse cyril.png",detail:"Moderne, large choix de coloris, zéro entretien."}
+        {name:"Composite",tag:"sans entretien",image:PP+"composite.png",detail:"Moderne, large choix de coloris, zéro entretien."}
       ]},
     {num:"2",label:"Fondation",text:"Dalle carré béton avec plaque de fixation, ou dalle béton directement.",
       options:[
         {name:"Plaque + fixation",tag:"standard",image:"plaque+fixation.png",detail:"Platine métallique sur dalle béton. Solution polyvalente et ajustable."},
         {name:"Dalle béton",tag:"direct",image:"d53fbefd-d829-4cba-b486-9bea9dc73075.jpg",detail:"Pose directe sur dalle béton existante ou coulée sur mesure."}
       ]},
-    {num:"3",label:"Escalier",text:"Marches bois assorties à la terrasse, contremarches, limon sur mesure.",side:true,
-      options:[
-        {name:"Escalier bois",tag:"sur mesure",image:"IMG_7288 (1).jpg",detail:"Marches bois assorties à la terrasse, contremarches, limon sur mesure."}
-      ]},
-    {num:"4",label:"Garde-corps",text:"Obligatoire au-delà d'1 m de hauteur. Bois, inox, câbles ou verre.",side:true,
-      options:[
-        {name:"Garde-corps",tag:"sécurité",image:"Photo-dme--5.jpg",detail:"Obligatoire au-delà d'1 m de hauteur. Bois, inox, câbles ou verre."}
-      ]}
+    {num:"3",label:"Escalier",text:"Marches bois assorties à la terrasse, contremarches, limon sur mesure.",type:"toggle",image:"IMG_7288 (1).jpg"},
+    {num:"4",label:"Garde-corps",text:"Obligatoire au-delà d'1 m de hauteur. Bois, inox, câbles ou verre.",type:"toggle",image:"Photo-dme--5.jpg"},
+    {num:"5",label:"Dimensions",text:"Longueur × largeur souhaitées.",type:"text"}
   ],
   info:{title:"Points clés terrasse",items:["Chaque terrasse est configurée selon vos usages, votre terrain et votre budget","Structure porteuse dimensionnée : portance, lambourdes, ancrage","Montrez les options au client pour co-construire le projet"]}
 },
@@ -441,16 +486,24 @@ const slides = [
     P+"pergola mr piquet.jpg",
     P+"terrasse-pergolas Mme Pouis.jpg",
     P+"pexels-jonathanborba-5563471.jpg",
-    P+"vecteezy_a-wooden-pergola-over-a-beach_69913963.jpg"
+    P+"pergolas mr gauthier.png"
   ],
   captions:["Pergola moderne — salon ombragé","Terrasse & Pergola — Réalisation client","Pergola bois — espace piscine","Structure pergola bois massif"],
   chips:["Adossée ou autoportée","Couverture au choix","Support végétal","Espace spa / cuisine d'été"],
-  process:[
-    {num:"1",label:"Étude & implantation",text:"Relevé de cotes, orientation, choix du type (adossée ou autoportée)."},
-    {num:"2",label:"Scellement des poteaux",text:"Ancrage sur platines ou dans le sol, mise d'aplomb."},
-    {num:"3",label:"Montage de la structure",text:"Poteaux, poutres, traverses assemblés selon les plans d'atelier."},
-    {num:"4",label:"Couverture",text:"Pose de la toiture : polycarbonate, lames orientables, toile ou bac acier."},
-    {num:"5",label:"Finitions",text:"Habillages, gouttières, éclairage intégré si prévu, nettoyage."}
+  config:[
+    {num:"1",label:"Type de pergola",text:"Choisissez le type d'implantation.",
+      options:[
+        {name:"Adossée",tag:"classique",detail:"Fixée au mur de la maison, prolonge l'espace de vie existant."},
+        {name:"Autoportée",tag:"indépendante",detail:"Structure indépendante, positionnement libre dans le jardin."}
+      ]},
+    {num:"2",label:"Couverture",text:"Choisissez le type de couverture.",
+      options:[
+        {name:"Polycarbonate",tag:"lumière",detail:"Laisse passer la lumière tout en protégeant de la pluie."},
+        {name:"Lames orientables",tag:"modulable",detail:"Régulation de la lumière et de la ventilation selon vos envies."},
+        {name:"Toile tendue",tag:"esthétique",detail:"Effet voile, légèreté et protection solaire."},
+        {name:"Bac acier",tag:"étanche",detail:"Protection totale contre les intempéries, toiture durable."}
+      ]},
+    {num:"3",label:"Dimensions",text:"Longueur × largeur × hauteur souhaitées.",type:"text"}
   ],
   info:{title:"Valeur d'usage",items:["Créer une vraie pièce extérieure protégée","Apporter ombre, confort et structure","Montrer la cohérence avec la maison"]}
 },
@@ -469,12 +522,21 @@ const slides = [
   ],
   captions:["Carport bois avec bardage","Réalisation Soissons","Réalisation Compiègne","Carport toit plat","Abri deux-roues"],
   chips:["1 ou 2 véhicules","Camping-car","Rangement intégré","Résistance vent Eurocode"],
-  process:[
-    {num:"1",label:"Étude & dimensionnement",text:"Nombre de véhicules, portée libre, intégration architecturale."},
-    {num:"2",label:"Fondations",text:"Plots béton, platines d'ancrage ou scellement selon le terrain."},
-    {num:"3",label:"Ossature bois",text:"Montage des poteaux et charpente, contreventement, vérification d'aplomb."},
-    {num:"4",label:"Toiture",text:"Pose de la couverture : bac acier, tuiles, polycarbonate ou végétalisé."},
-    {num:"5",label:"Finitions",text:"Bardage latéral, gouttières, rangement intégré si prévu, nettoyage."}
+  config:[
+    {num:"1",label:"Nombre de véhicules",text:"Combien de véhicules à abriter ?",
+      options:[
+        {name:"1 véhicule",tag:"simple",detail:"Carport simple, emprise au sol optimisée."},
+        {name:"2 véhicules",tag:"double",detail:"Carport double, portée libre sans poteau central."},
+        {name:"Camping-car",tag:"grande hauteur",detail:"Structure renforcée, hauteur et largeur adaptées."}
+      ]},
+    {num:"2",label:"Toiture",text:"Choisissez le type de couverture.",
+      options:[
+        {name:"Bac acier",tag:"résistant",detail:"Durable, étanche, large choix de coloris."},
+        {name:"Tuiles",tag:"traditionnel",detail:"Intégration harmonieuse avec l'habitat existant."},
+        {name:"Polycarbonate",tag:"lumière",detail:"Laisse passer la lumière naturelle."}
+      ]},
+    {num:"3",label:"Rangement intégré",text:"Espace de rangement latéral pour outils, vélos, etc.",type:"toggle"},
+    {num:"4",label:"Dimensions",text:"Longueur × largeur × hauteur souhaitées.",type:"text"}
   ],
   info:{title:"Arguments carport",items:["Le carport doit être utile ET bien intégré","Personnalisation = vrai argument différenciant","Montrer les différents styles"]}
 },
@@ -494,25 +556,37 @@ const slides = [
   ],
   captions:["Dôme avec jacuzzi","Dôme & terrasse bois","Projet Bastogne","Bastogne — vue rapprochée","Détail structure","Vue d'ensemble"],
   chips:["Dôme géodésique","Vitrage","Terrasse intégrée","Bardage","Projet unique"],
+  config:[
+    {num:"1",label:"Description du projet",text:"Décrivez le projet souhaité par le client.",type:"text"}
+  ],
   info:{title:"Le sur-mesure comme preuve de compétence",items:["Si on sait faire un dôme géodésique, on sait tout faire en structure bois","C'est l'origine de l'entreprise — ça rassure sur le niveau technique","Tout ce que le client imagine en bois, on peut le concevoir et le fabriquer"]}
 },
 // ===== 9 — VOTRE PROJET =====
 {
-  id:"process",title:"Votre projet",layout:"process-grid",
-  eyebrow:"Votre projet",
-  slideTitle:"Comment se passe votre projet ?",
-  subtitle:"Un processus clair, du premier contact à la réception de votre ouvrage.",
-  steps:[
-    {icon:"chat",num:"01",label:"Premier échange",text:"Nous discutons de votre projet par téléphone ou formulaire. Réponse rapide.",detail:"Après un premier échange, nous qualifions votre projet et comprenons vos attentes : usages, style, budget, contraintes du terrain. Pas de déplacement inutile."},
-    {icon:"clipboard",num:"02",label:"Qualification du projet",text:"Nous évaluons la faisabilité, le type d'ouvrage et les contraintes techniques.",detail:"Type de bois adapté, configuration du terrain, accès, réglementation… On anticipe tout avant de vous proposer une solution."},
-    {icon:"camera",num:"03",label:"Photos, dimensions, visite",text:"Envoyez vos photos et dimensions. Visite sur place si nécessaire, gratuite.",detail:"On se déplace chez vous pour relever les cotes exactes, évaluer le terrain et vous conseiller. Déplacement gratuit dans notre zone de 60 km."},
-    {icon:"doc",num:"04",label:"Devis détaillé",text:"Chiffrage précis avec plans, choix des matériaux et planning prévisionnel.",detail:"Vous recevez un devis détaillé sous 24h avec plans et chiffrage. Un seul interlocuteur du devis à la réception du chantier."},
-    {icon:"hammer",num:"05",label:"Fabrication et préparation",text:"Découpe, usinage et pré-assemblage en atelier avant le départ sur chantier.",detail:"Chaque pièce est inspectée, découpée avec précision et contrôlée. Pré-assemblage à blanc en atelier pour vérifier l'ajustement. Délai : 2 à 7 jours ouvrés."},
-    {icon:"star",num:"06",label:"Pose et finitions",text:"Installation par notre équipe, vérifications, nettoyage et réception du chantier.",detail:"Pièces numérotées et organisées pour une pose rapide et propre. Nos charpentiers posent ce qu'ils ont eux-mêmes fabriqué. Réception du chantier ensemble."}
-  ],
-  info:{title:"Ce que cette slide enlève",items:["La peur de l'inconnu","Le sentiment que le projet est compliqué","Le doute sur les prochaines étapes"]}
+  id:"process",title:"Votre projet",layout:"recap",
+  eyebrow:"Récapitulatif",
+  slideTitle:"Votre projet",
+  subtitle:"Résumé des choix validés avec le client."
 },
-// ===== 10 — CONTACT =====
+// ===== ENGAGEMENTS =====
+{
+  id:"engagements",title:"Engagements",layout:"engagements",
+  eyebrow:"Nos engagements",
+  slideTitle:"Ce qui est garanti",
+  subtitle:"Des choix exigeants pour des projets qui durent.",
+  guarantees:[
+    {title:"Garantie décennale",text:"Tous les ouvrages couverts 10 ans.",detail:"Structures, fixations, matériaux — investissement protégé en toute sérénité."},
+    {title:"Garantie biennale",text:"Éléments dissociables couverts 2 ans.",detail:"Équipements et finitions remplaçables sans toucher à la structure."},
+    {title:"Parfait achèvement",text:"Toute malfaçon corrigée après réception.",detail:"Signalement sous 30 jours, intervention rapide."},
+    {title:"Assurance RC Pro",text:"Responsabilité civile professionnelle.",detail:"L'entreprise est couverte pour votre tranquillité totale."},
+    {title:"Normes DTU",text:"Documents Techniques Unifiés respectés.",detail:"Chantier suivi de bout en bout, conformité assurée."},
+    {title:"Zéro sous-traitance",text:"Notre équipe de bout en bout.",detail:"Nos artisans posent ce qu'ils ont fabriqué. Une seule équipe responsable."},
+    {title:"Essences sélectionnées",text:"Chaque planche inspectée selon l'usage.",detail:"Finitions soignées pour un rendu esthétique durable."},
+    {title:"Visite technique gratuite",text:"Déplacement offert dans notre zone.",detail:"On se déplace chez vous pour comprendre votre terrain avant de concevoir."}
+  ],
+  info:{title:"Rassurer le client",items:["Insister sur la décennale : souvent ce que les clients cherchent","Zéro sous-traitance = cohérence et responsabilité","Visite gratuite = pas d'engagement"]}
+},
+// ===== CONTACT =====
 {
   id:"contact",title:"Contact",layout:"contact",
   eyebrow:"Prochaine étape",
@@ -536,6 +610,10 @@ const ICONS = {
 
 // =============== MOTEUR ===============
 let index=0, lbImages=[], lbIdx=0;
+var projectData={}; // {terrasses:{...}, pergolas:{...}, ...}
+var projectPhotos=[]; // base64 images from camera
+var savedClientName='';
+var savedNotes='';
 
 function e(s){return(s||'').replace(/</g,'&lt;').replace(/\n/g,'<br>')}
 
@@ -556,6 +634,256 @@ function processBlock(s){
       return'<div class="install-step"><div class="step-num">'+p.num+'</div><div class="step-label">'+e(p.label)+'</div><div class="step-text">'+e(p.text)+'</div>'+imgs+'</div>';
     }).join('')+
   '</div></div>';
+}
+
+function configBlock(s,productId){
+  if(!s.config)return'';
+  var titles={terrasses:'Configurez votre terrasse',pergolas:'Configurez votre pergola',carports:'Configurez votre carport',surmesure:'Décrivez le projet'};
+  var title=titles[productId]||'Configuration';
+  return '<div class="config-section"><div class="config-title">'+title+'</div><div class="config-steps">'+
+  s.config.map(function(step,si){
+    if(step.type==='toggle'){
+      // Toggle oui/non
+      return '<div class="config-step config-expand" onclick="this.classList.toggle(\'open\')">'+
+        '<div class="config-step-left"><div class="config-step-header"><div class="config-step-num">'+step.num+'</div><div class="config-step-info"><h3>'+e(step.label)+'</h3><p>'+e(step.text)+'</p></div><div class="config-step-arrow">▸</div></div>'+
+        '<div class="config-toggle">'+
+        (step.image?'<img class="config-toggle-img" src="'+encodeURI(step.image)+'" onclick="event.stopPropagation();openSingleLB(this.src)">':'')+
+        '<div class="toggle-btns">'+
+        '<button class="toggle-btn" onclick="event.stopPropagation();selectToggle(\''+productId+'\','+si+',\'Oui\',this)">Oui</button>'+
+        '<button class="toggle-btn" onclick="event.stopPropagation();selectToggle(\''+productId+'\','+si+',\'Non\',this)">Non</button>'+
+        '</div></div></div></div>';
+    } else if(step.type==='text'){
+      // Champ texte libre
+      return '<div class="config-step config-expand" onclick="this.classList.toggle(\'open\')">'+
+        '<div class="config-step-left"><div class="config-step-header"><div class="config-step-num">'+step.num+'</div><div class="config-step-info"><h3>'+e(step.label)+'</h3><p>'+e(step.text)+'</p></div><div class="config-step-arrow">▸</div></div>'+
+        '<div class="config-textarea"><textarea id="config-text-'+productId+'" placeholder="Ex: dôme géodésique 6m, terrasse intégrée, bardage bois..." onclick="event.stopPropagation()"></textarea></div></div></div>';
+    } else {
+      // Options sélectionnables
+      return '<div class="config-step config-expand" onclick="this.classList.toggle(\'open\')">'+
+        '<div class="config-step-left"><div class="config-step-header"><div class="config-step-num">'+step.num+'</div><div class="config-step-info"><h3>'+e(step.label)+'</h3><p>'+e(step.text)+'</p></div><div class="config-step-arrow">▸</div></div>'+
+        '<div class="config-options">'+step.options.map(function(o,oi){
+          var hasImg=o.image?'<img src="'+encodeURI(o.image)+'" alt="'+e(o.name)+'" onclick="event.stopPropagation();openSingleLB(this.src)">':'';
+          return '<div class="config-opt" onclick="event.stopPropagation();selectOpt(\''+productId+'\','+si+','+oi+',this)">'+hasImg+'<div class="opt-name">'+e(o.name)+'</div>'+(o.tag?'<div class="opt-tag">'+e(o.tag)+'</div>':'')+(o.detail?'<div class="opt-detail">'+e(o.detail)+'</div>':'')+'</div>';
+        }).join('')+'</div></div></div>';
+    }
+  }).join('')+
+  '</div><div class="config-validate"><button class="btn-validate" onclick="validateConfig(\''+productId+'\')">✓ Valider la sélection</button></div></div>';
+}
+
+function selectOpt(product,stepIdx,optIdx,el){
+  var parent=el.parentNode;
+  var opts=parent.querySelectorAll('.config-opt');
+  opts.forEach(function(o){o.classList.remove('selected')});
+  el.classList.add('selected');
+  if(!projectData[product])projectData[product]={};
+  var s=slides.find(function(sl){return sl.id===product});
+  projectData[product][s.config[stepIdx].label]=s.config[stepIdx].options[optIdx].name;
+}
+
+function selectToggle(product,stepIdx,val,el){
+  var btns=el.parentNode.querySelectorAll('.toggle-btn');
+  btns.forEach(function(b){b.classList.remove('selected')});
+  el.classList.add('selected');
+  if(!projectData[product])projectData[product]={};
+  var s=slides.find(function(sl){return sl.id===product});
+  projectData[product][s.config[stepIdx].label]=val;
+}
+
+function validateConfig(product){
+  var s=slides.find(function(sl){return sl.id===product});
+  if(!projectData[product])projectData[product]={};
+  // Récupérer les champs texte
+  s.config.forEach(function(step){
+    if(step.type==='text'){
+      var ta=document.getElementById('config-text-'+product);
+      if(ta&&ta.value)projectData[product][step.label]=ta.value;
+    }
+  });
+  // Trouver la slide suivante et naviguer
+  var curIdx=slides.indexOf(s);
+  if(curIdx<slides.length-1){
+    index=curIdx+1;
+    renderSlide();
+    renderSidebar();
+  }
+  // Feedback visuel
+  alert('Configuration '+s.title+' enregistrée !');
+}
+
+function removeConfig(product){
+  saveRecapFields();
+  delete projectData[product];
+  renderSlide();
+  restoreRecapFields();
+}
+
+function saveRecapFields(){
+  var cn=document.getElementById('client-name');
+  var pn=document.getElementById('project-notes');
+  if(cn)savedClientName=cn.value;
+  if(pn)savedNotes=pn.value;
+}
+function restoreRecapFields(){
+  var cn=document.getElementById('client-name');
+  var pn=document.getElementById('project-notes');
+  if(cn)cn.value=savedClientName;
+  if(pn)pn.value=savedNotes;
+}
+
+function addPhoto(input){
+  if(!input.files||!input.files[0])return;
+  saveRecapFields();
+  var reader=new FileReader();
+  reader.onload=function(ev){
+    projectPhotos.push(ev.target.result);
+    renderSlide();
+    restoreRecapFields();
+  };
+  reader.readAsDataURL(input.files[0]);
+}
+
+function removePhoto(idx){
+  saveRecapFields();
+  projectPhotos.splice(idx,1);
+  renderSlide();
+  restoreRecapFields();
+}
+
+function generatePDF(){
+  var clientName=document.getElementById('client-name')?document.getElementById('client-name').value:'';
+  if(!clientName){alert('Veuillez saisir le nom du client.');return;}
+  var jsPDF=window.jspdf.jsPDF;
+  var doc=new jsPDF();
+  var y=15;
+  var pageW=210,margin=15,contentW=pageW-margin*2;
+  var today=new Date();
+  var accentR=184,accentG=115,accentB=51;
+
+  function checkPage(need){if(y+need>280){doc.addPage();y=15;}}
+  function drawLine(){doc.setDrawColor(accentR,accentG,accentB);doc.setLineWidth(0.4);doc.line(margin,y,pageW-margin,y);y+=6;}
+  function sectionTitle(txt){
+    checkPage(14);
+    doc.setFontSize(13);doc.setFont('helvetica','bold');doc.setTextColor(accentR,accentG,accentB);
+    doc.text(txt,margin,y);doc.setTextColor(0,0,0);y+=7;
+  }
+
+  // === EN-TÊTE ===
+  doc.setFillColor(30,25,20);
+  doc.rect(0,0,pageW,38,'F');
+  doc.setFontSize(20);doc.setFont('helvetica','bold');doc.setTextColor(255,255,255);
+  doc.text('La Planète Bois',margin,18);
+  doc.setFontSize(9);doc.setFont('helvetica','normal');doc.setTextColor(200,190,175);
+  doc.text('SAS DomeBulle — Villeneuve-Saint-Germain — 02600',margin,25);
+  doc.text('06 47 61 69 19 — laplanetebois@gmail.com',margin,30);
+  doc.setFontSize(9);doc.setTextColor(accentR,accentG,accentB);
+  doc.text('Fiche projet',pageW-margin,18,{align:'right'});
+  doc.setTextColor(200,190,175);
+  doc.text(today.toLocaleDateString('fr-FR'),pageW-margin,25,{align:'right'});
+  doc.setTextColor(0,0,0);
+  y=46;
+
+  // === CLIENT ===
+  doc.setFillColor(245,240,232);
+  doc.roundedRect(margin,y,contentW,14,3,3,'F');
+  doc.setFontSize(12);doc.setFont('helvetica','bold');
+  doc.text('Client :  '+clientName,margin+6,y+9);
+  y+=22;
+
+  // === CONFIGURATIONS ===
+  var products=['terrasses','pergolas','carports','surmesure'];
+  var productNames={terrasses:'Terrasse',pergolas:'Pergola',carports:'Carport',surmesure:'Sur mesure'};
+  var productIcons={terrasses:'T',pergolas:'P',carports:'C',surmesure:'S'};
+  var hasData=false;
+
+  products.forEach(function(p){
+    if(projectData[p]&&Object.keys(projectData[p]).length>0){
+      hasData=true;
+      var keys=Object.keys(projectData[p]);
+      checkPage(12+keys.length*7);
+      // Titre produit avec pastille
+      doc.setFillColor(accentR,accentG,accentB);
+      doc.circle(margin+4,y-1,4,'F');
+      doc.setFontSize(8);doc.setFont('helvetica','bold');doc.setTextColor(255,255,255);
+      doc.text(productIcons[p],margin+4,y+0.5,{align:'center'});
+      doc.setTextColor(0,0,0);
+      doc.setFontSize(13);doc.setFont('helvetica','bold');
+      doc.text(productNames[p],margin+12,y);
+      y+=7;
+      // Ligne sous titre
+      doc.setDrawColor(230,220,205);doc.setLineWidth(0.3);
+      doc.line(margin,y,pageW-margin,y);y+=5;
+      // Items en 2 colonnes
+      doc.setFontSize(10);
+      var col=0;
+      keys.forEach(function(key){
+        checkPage(8);
+        var x=margin+(col===0?4:contentW/2+4);
+        doc.setFont('helvetica','normal');doc.setTextColor(120,110,100);
+        doc.text(key,x,y);
+        doc.setFont('helvetica','bold');doc.setTextColor(30,25,20);
+        doc.text(projectData[p][key],x+doc.getTextWidth(key)+3,y);
+        col++;
+        if(col>=2){col=0;y+=6.5;}
+      });
+      if(col!==0)y+=6.5;
+      y+=4;
+    }
+  });
+
+  if(!hasData){alert('Aucune configuration validée.');return;}
+
+  // === NOTES ===
+  var notes=document.getElementById('project-notes')?document.getElementById('project-notes').value:'';
+  if(notes){
+    checkPage(20);
+    drawLine();
+    sectionTitle('Notes');
+    doc.setFontSize(10);doc.setFont('helvetica','normal');doc.setTextColor(60,55,50);
+    var splitNotes=doc.splitTextToSize(notes,contentW-10);
+    checkPage(splitNotes.length*5+4);
+    doc.text(splitNotes,margin+4,y);
+    y+=splitNotes.length*5+6;
+  }
+
+  // === PHOTOS ===
+  if(projectPhotos.length>0){
+    checkPage(20);
+    drawLine();
+    sectionTitle('Photos du terrain');
+    var maxW=55,maxH=42,gap=6;
+    var cols=3;
+    var col=0;
+    projectPhotos.forEach(function(ph){
+      checkPage(maxH+8);
+      var x=margin+col*(maxW+gap);
+      try{
+        var img=new Image();img.src=ph;
+        var ratio=img.width/img.height;
+        var drawW,drawH;
+        if(ratio>=maxW/maxH){drawW=maxW;drawH=maxW/ratio;}
+        else{drawH=maxH;drawW=maxH*ratio;}
+        var offX=(maxW-drawW)/2;
+        var offY=(maxH-drawH)/2;
+        doc.setDrawColor(220,215,205);doc.setLineWidth(0.3);
+        doc.roundedRect(x,y,maxW,maxH,2,2,'S');
+        doc.addImage(ph,'JPEG',x+offX,y+offY,drawW,drawH);
+      }catch(err){}
+      col++;
+      if(col>=cols){col=0;y+=maxH+gap;}
+    });
+    if(col!==0)y+=maxH+gap;
+  }
+
+  // === PIED DE PAGE ===
+  checkPage(16);
+  y+=4;
+  drawLine();
+  doc.setFontSize(8);doc.setTextColor(160,155,145);
+  doc.text('La Planète Bois — Présentation commerciale — '+today.toLocaleDateString('fr-FR'),105,y,{align:'center'});
+
+  // Sauvegarder
+  var fileName='Projet_'+clientName.replace(/[^a-zA-Z0-9]/g,'_')+'_'+today.toISOString().slice(0,10)+'.pdf';
+  doc.save(fileName);
 }
 
 function renderSidebar(){
@@ -597,9 +925,16 @@ function renderSlide(){
   // THREEPOINTS
   if(s.layout==='threepoints'){
     html='<div class="slide threepoints"><div class="left pad"><div class="eyebrow">'+e(s.eyebrow)+'</div><div class="title">'+e(s.slideTitle)+'</div>'+(s.subtitle?'<div class="subtitle">'+e(s.subtitle)+'</div>':'')+
-    '<div class="threegrid">'+s.points.map(function(p){return'<div class="pointcard" onclick="this.classList.toggle(\'open\')"><h3>'+e(p.title)+'</h3><p>'+e(p.text)+'</p>'+(p.detail?'<div class="detail">'+e(p.detail)+'</div><div class="expand-hint">▸ Cliquer pour détails</div>':'')+'</div>'}).join('')+'</div>'+
+    '<div class="threegrid">'+s.points.map(function(p){return'<div class="pointcard" onclick="this.classList.toggle(\'open\')"><h3>'+e(p.title)+'</h3><p>'+e(p.text)+'</p>'+(p.detail?'<div class="detail">'+e(p.detail)+'</div>':'')+(p.image?'<div class="detail point-img-preview"><img src="'+encodeURI(p.image)+'" alt="'+e(p.title)+'" onclick="event.stopPropagation();openSingleLB(decodeURIComponent(this.src))"></div>':'')+(!p.image&&p.detail?'<div class="expand-hint">▸ Cliquer pour détails</div>':'')+'</div>'}).join('')+'</div>'+
     (s.extraPoints?'<div class="threegrid" style="margin-top:10px">'+s.extraPoints.map(function(p){return'<div class="pointcard" onclick="this.classList.toggle(\'open\')"><h3>'+e(p.title)+'</h3><p>'+e(p.text)+'</p>'+(p.detail?'<div class="detail">'+e(p.detail)+'</div><div class="expand-hint">▸ Cliquer pour détails</div>':'')+'</div>'}).join('')+'</div>':'')+
     infoBox(s)+'</div><div class="imagewrap" onclick="openLightbox(\''+encodeURI(s.images[0])+'\')"><img src="'+encodeURI(s.images[0])+'" alt=""></div></div>';
+  }
+
+  // METIERS 4 COLONNES
+  if(s.layout==='metiers4'){
+    html='<div class="slide gallery4"><div class="head"><div class="eyebrow">'+e(s.eyebrow)+'</div><div class="title">'+e(s.slideTitle)+'</div><div class="subtitle">'+e(s.subtitle)+'</div></div><div class="metiers4-grid">'+
+    s.metiers.map(function(m){return'<div class="metier-col" onclick="this.classList.toggle(\'open\')"><img src="'+encodeURI(m.image)+'" alt="'+e(m.title)+'" onclick="event.stopPropagation();openSingleLB(encodeURI(decodeURI(this.src)))"><div class="metier-body"><h3>'+e(m.title)+'</h3><p>'+e(m.text)+'</p><div class="metier-detail">'+e(m.detail)+'</div></div></div>'}).join('')+
+    '</div><div style="padding:0 36px 24px">'+infoBox(s)+'</div></div>';
   }
 
   // WHYUS-FULL
@@ -626,43 +961,24 @@ function renderSlide(){
 
   // GALLERY4
   if(s.layout==='gallery4'){
-    html='<div class="slide gallery4"><div class="head"><div class="eyebrow">'+e(s.eyebrow)+'</div><div class="title">'+e(s.slideTitle)+'</div><div class="subtitle">'+e(s.subtitle)+'</div>'+(s.chips?'<div class="chips">'+s.chips.map(function(c){return'<span class="chip">'+e(c)+'</span>'}).join('')+'</div>':'')+'</div><div class="gallerygrid4">'+s.images.map(function(img,i){return imgBlock(img,s.captions&&s.captions[i])}).join('')+'</div>'+processBlock(s)+'<div style="padding:0 36px 24px">'+infoBox(s)+'</div></div>';
+    html='<div class="slide gallery4"><div class="head"><div class="eyebrow">'+e(s.eyebrow)+'</div><div class="title">'+e(s.slideTitle)+'</div><div class="subtitle">'+e(s.subtitle)+'</div>'+(s.chips?'<div class="chips">'+s.chips.map(function(c){return'<span class="chip">'+e(c)+'</span>'}).join('')+'</div>':'')+'</div><div class="gallerygrid4">'+s.images.map(function(img,i){return imgBlock(img,s.captions&&s.captions[i])}).join('')+'</div>'+configBlock(s,s.id)+'<div style="padding:0 36px 24px">'+infoBox(s)+'</div></div>';
   }
 
   // GALLERY5 (3 top + 2 bottom)
   if(s.layout==='gallery5'){
-    html='<div class="slide gallery6"><div class="head"><div class="eyebrow">'+e(s.eyebrow)+'</div><div class="title">'+e(s.slideTitle)+'</div><div class="subtitle">'+e(s.subtitle)+'</div>'+(s.chips?'<div class="chips">'+s.chips.map(function(c){return'<span class="chip">'+e(c)+'</span>'}).join('')+'</div>':'')+'</div><div class="gallerygrid3">'+s.images.slice(0,3).map(function(img,i){return imgBlock(img,s.captions&&s.captions[i])}).join('')+'</div><div class="gallerygrid2">'+s.images.slice(3).map(function(img,i){return imgBlock(img,s.captions&&s.captions[i+3])}).join('')+'</div>'+processBlock(s)+'<div style="padding:0 36px 24px">'+infoBox(s)+'</div></div>';
+    html='<div class="slide gallery6"><div class="head"><div class="eyebrow">'+e(s.eyebrow)+'</div><div class="title">'+e(s.slideTitle)+'</div><div class="subtitle">'+e(s.subtitle)+'</div>'+(s.chips?'<div class="chips">'+s.chips.map(function(c){return'<span class="chip">'+e(c)+'</span>'}).join('')+'</div>':'')+'</div><div class="gallerygrid3">'+s.images.slice(0,3).map(function(img,i){return imgBlock(img,s.captions&&s.captions[i])}).join('')+'</div><div class="gallerygrid2">'+s.images.slice(3).map(function(img,i){return imgBlock(img,s.captions&&s.captions[i+3])}).join('')+'</div>'+configBlock(s,s.id)+'<div style="padding:0 36px 24px">'+infoBox(s)+'</div></div>';
   }
 
   // GALLERY6
   if(s.layout==='gallery6'){
-    html='<div class="slide gallery6"><div class="head"><div class="eyebrow">'+e(s.eyebrow)+'</div><div class="title">'+e(s.slideTitle)+'</div><div class="subtitle">'+e(s.subtitle)+'</div>'+(s.chips?'<div class="chips">'+s.chips.map(function(c){return'<span class="chip">'+e(c)+'</span>'}).join('')+'</div>':'')+'</div><div class="gallerygrid6">'+s.images.map(function(img,i){return imgBlock(img,s.captions&&s.captions[i])}).join('')+'</div><div style="padding:0 36px 24px">'+infoBox(s)+'</div></div>';
+    html='<div class="slide gallery6"><div class="head"><div class="eyebrow">'+e(s.eyebrow)+'</div><div class="title">'+e(s.slideTitle)+'</div><div class="subtitle">'+e(s.subtitle)+'</div>'+(s.chips?'<div class="chips">'+s.chips.map(function(c){return'<span class="chip">'+e(c)+'</span>'}).join('')+'</div>':'')+'</div><div class="gallerygrid6">'+s.images.map(function(img,i){return imgBlock(img,s.captions&&s.captions[i])}).join('')+'</div>'+configBlock(s,s.id)+'<div style="padding:0 36px 24px">'+infoBox(s)+'</div></div>';
   }
 
   // TERRASSES (gallery + configuration)
   if(s.layout==='terrasses'){
     html='<div class="slide gallery6"><div class="head"><div class="eyebrow">'+e(s.eyebrow)+'</div><div class="title">'+e(s.slideTitle)+'</div><div class="subtitle">'+e(s.subtitle)+'</div></div>'+
     '<div class="gallerygrid6">'+s.images.map(function(img,i){return imgBlock(img,s.captions&&s.captions[i])}).join('')+'</div>'+
-    '<div class="config-section"><div class="config-title">Configurez votre terrasse</div><div class="config-steps">'+
-    s.config.map(function(step){
-      if(step.side){
-        // 1 seule image : déroulant avec photo à côté du texte
-        var o=step.options[0];
-        return '<div class="config-step config-expand" onclick="this.classList.toggle(\'open\')">'+
-          '<div class="config-step-left"><div class="config-step-header"><div class="config-step-num">'+step.num+'</div><div class="config-step-info"><h3>'+e(step.label)+'</h3><p>'+e(step.text)+'</p></div><div class="config-step-arrow">▸</div></div>'+
-          '<div class="config-single"><div class="config-single-text"><p>'+e(o.detail)+'</p></div>'+
-          '<div class="config-single-img"><img src="'+encodeURI(o.image)+'" alt="'+e(o.name)+'" onclick="event.stopPropagation();openSingleLB(\''+encodeURI(o.image)+'\')"></div></div>'+
-          '</div></div>';
-      } else {
-        // Plusieurs options : déroulant avec grille
-        return '<div class="config-step config-expand" onclick="this.classList.toggle(\'open\')">'+
-          '<div class="config-step-left"><div class="config-step-header"><div class="config-step-num">'+step.num+'</div><div class="config-step-info"><h3>'+e(step.label)+'</h3><p>'+e(step.text)+'</p></div><div class="config-step-arrow">▸</div></div>'+
-          '<div class="config-options">'+step.options.map(function(o){
-            return '<div class="config-opt"><img src="'+encodeURI(o.image)+'" alt="'+e(o.name)+'" onclick="event.stopPropagation();openSingleLB(\''+encodeURI(o.image)+'\')"><div class="opt-name">'+e(o.name)+'</div><div class="opt-tag">'+e(o.tag)+'</div><div class="opt-detail">'+e(o.detail)+'</div></div>';
-          }).join('')+'</div></div></div>';
-      }
-    }).join('')+
-    '</div></div>'+
+    configBlock(s,'terrasses')+
     '<div style="padding:0 36px 24px">'+infoBox(s)+'</div></div>';
   }
 
@@ -671,6 +987,35 @@ function renderSlide(){
     html='<div class="slide process-grid"><div class="head"><div class="eyebrow">'+e(s.eyebrow)+'</div><div class="title">'+e(s.slideTitle)+'</div><div class="subtitle">'+e(s.subtitle)+'</div></div><div class="proc-grid">'+
     s.steps.map(function(st){return'<div class="proc-card" onclick="this.classList.toggle(\'open\')"><div class="proc-icon">'+ICONS[st.icon]+'</div><div class="proc-num">'+e(st.num)+'</div><h3>'+e(st.label)+'</h3><p>'+e(st.text)+'</p><div class="proc-detail">'+e(st.detail)+'</div></div>'}).join('')+
     '</div><div style="padding:0 36px 24px">'+infoBox(s)+'</div></div>';
+  }
+
+  // RECAP
+  if(s.layout==='recap'){
+    var products=[{id:'terrasses',name:'Terrasse',icon:'T'},{id:'pergolas',name:'Pergola',icon:'P'},{id:'carports',name:'Carport',icon:'C'},{id:'surmesure',name:'Sur mesure',icon:'S'}];
+    var recapCards='';
+    var hasAny=false;
+    products.forEach(function(p){
+      if(projectData[p.id]&&Object.keys(projectData[p.id]).length>0){
+        hasAny=true;
+        var items='';
+        Object.keys(projectData[p.id]).forEach(function(key){
+          items+='<div class="recap-item"><span class="ri-label">'+e(key)+'</span><span class="ri-value">'+e(projectData[p.id][key])+'</span></div>';
+        });
+        recapCards+='<div class="recap-card"><h3><span class="rc-icon">'+p.icon+'</span>'+e(p.name)+'<button class="recap-remove" onclick="removeConfig(\''+p.id+'\')">✕ Retirer</button></h3><div class="recap-items">'+items+'</div></div>';
+      }
+    });
+    if(!hasAny)recapCards='<div class="recap-empty">Aucune configuration validée pour le moment.<br>Rendez-vous sur les pages Terrasses, Pergolas, Carports ou Sur mesure pour configurer un projet.</div>';
+    html='<div class="slide gallery4"><div class="recap-section"><div class="eyebrow">'+e(s.eyebrow)+'</div><div class="title">'+e(s.slideTitle)+'</div><div class="subtitle">'+e(s.subtitle)+'</div>'+
+    '<div class="recap-client" style="margin-top:18px"><label>Nom du client</label><input type="text" id="client-name" placeholder="Ex: M. Dupont"></div>'+
+    '<div class="recap-cards">'+recapCards+'</div>'+
+    '<div class="recap-photos"><label>📷 Photos du terrain / existant</label><div class="photos-grid" id="photos-grid">'+
+    (projectPhotos.map(function(ph,i){return'<div class="photo-wrap"><img class="photo-thumb" src="'+ph+'" onclick="openSingleLB(this.src)"><button class="photo-remove" onclick="removePhoto('+i+')">✕</button></div>'}).join(''))+
+    '<label class="photo-add" for="photo-input"><svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="4"/><path d="M5 7h2l2-3h6l2 3h2a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9a2 2 0 012-2z"/></svg><span>Prendre photo</span></label>'+
+    '<input type="file" id="photo-input" accept="image/*" capture="environment" style="display:none" onchange="addPhoto(this)">'+
+    '</div></div>'+
+    '<div style="margin-top:16px"><label style="font-size:13px;font-weight:700;color:var(--text);display:block;margin-bottom:6px">Notes complémentaires</label><textarea id="project-notes" style="width:100%;height:80px;border:1px solid var(--line);border-radius:12px;padding:12px;font-family:Lato,sans-serif;font-size:13px;resize:vertical;color:var(--text);background:rgba(255,255,255,.8)" placeholder="Remarques, dimensions, contraintes particulières..."></textarea></div>'+
+    (hasAny?'<div class="recap-actions"><button class="btn-pdf" onclick="generatePDF()">📄 Générer le PDF</button></div>':'')+
+    '</div></div>';
   }
 
   // CONTACT
@@ -719,7 +1064,10 @@ function showLB(){
   document.getElementById('lightbox').classList.add('open');
 }
 function closeLightbox(ev){
-  if(ev&&ev.target!==ev.currentTarget&&!ev.target.classList.contains('lightbox-close'))return;
+  if(!ev)return;
+  var t=ev.target;
+  if(t.id==='lbImg')return;
+  if(t.classList.contains('lb-nav')||t.classList.contains('lb-prev')||t.classList.contains('lb-next'))return;
   document.getElementById('lightbox').classList.remove('open');
 }
 function lbNav(dir,ev){
@@ -745,6 +1093,8 @@ window.addEventListener('keydown',function(ev){
     if(ev.key==='ArrowRight')lbNav(1,ev);
     return;
   }
+  var tag=document.activeElement.tagName;
+  if(tag==='INPUT'||tag==='TEXTAREA')return;
   if(ev.key==='ArrowRight'||ev.key===' ')nextSlide();
   if(ev.key==='ArrowLeft')prevSlide();
 });
